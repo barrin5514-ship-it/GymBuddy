@@ -85,3 +85,65 @@ informed by the following official descriptions; availability varies.
   focus. Scoped styling gives the header a 44-pixel minimum height and wraps text.
 - **Keep the requested commit boundary.** Part B measurements and BMI will
   wait for approval and completion of the Part A commit. No generation logic.
+
+
+## 2026-10-08 — Stage 4 Part B: local measurements and informational BMI
+
+- **Preserve form order and existing behavior.** Append measurements and BMI
+  after the equipment dropdown. Generation remains disabled.
+- **Use explicit independent unit selectors.** Default to feet/inches and pounds;
+  support centimeters and kilograms. Inches may be fractional; feet are whole.
+- **Keep conversion precision in metric values.** Store current meters and
+  kilograms in memory and convert from them on switches. Round only converted
+  height controls; keep full converted weight precision at validity boundaries.
+- **Validate before displaying BMI.** Require all active fields. Reject missing,
+  nonnumeric, nonfinite, zero/negative totals, invalid feet/inches, and values
+  outside height 50–300 cm or weight 10–700 kg. These broad app guardrails reduce
+  accidental entries, are disclosed on the form, and are not clinical cutoffs.
+  Invalid unit switches clear destination fields and do not reinterpret a number.
+- **Keep adult interpretation optional.** Require confirmation of age 20+ before
+  showing the standard adult category. No birthdate or child/teen classification.
+  Apply 18.5/25/30 thresholds to unrounded BMI, display one decimal, and explain
+  that rounding can visually cross a category boundary.
+- **Use local calculation only.** No API request, browser storage, recommendation,
+  or workout decision uses these measurements. BMI does not directly measure
+  body fat and is informational, not a health diagnosis.
+- **Use accessible native inputs.** Labels, linked errors, aria-invalid, native
+  keyboard controls, and a polite status result support use without a mouse.
+  Disable and hide inactive height inputs; scoped CSS preserves hidden on flex.
+- Sources: [CDC adult BMI categories](https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html)
+  and [CDC about BMI](https://www.cdc.gov/bmi/about/), reviewed 2026-10-08.
+- **Maintain the approval boundary.** Part B is left uncommitted for user review.
+
+
+## 2026-10-08 — Part B UI corrections requested after review
+
+These decisions supersede the initial Part B interface decisions above.
+
+- **One compact Estimated BMI group.** Move age, height, preserved weight,
+  calculation, and result into one borderless fieldset in that order. Reduce
+  outer spacing; no unrelated redesign or nested cards.
+- **Replace the checkbox with two exclusive age choices.** Under 20 requires
+  exact age from 1 to below 20 years (decimals allowed); 20 and Older needs no
+  exact age. Require a deliberate category choice instead of assuming adult.
+- **Respect pediatric limits.** Show numerical BMI without adult categories.
+  Explain age/sex growth charts and, under age 2, that standard BMI-for-age
+  categories do not apply. No sex collection, chart download, or invented
+  percentiles; numerical BMI is not a pediatric health classification.
+- **Use paired native height dropdowns.** Feet and inches share a compact area;
+  centimeters replaces them in the same area. Retain exact metric values and
+  add a converted fractional-inch option as needed for accurate unit switching.
+- **Preserve working weight controls.** Keep pounds/kilograms input, unit
+  conversion, original validation, and 44px dimensions. Only outer spacing changes.
+  Preserved app measurement limits remain 50–300 cm and 10–700 kg; therefore
+  some smaller children's measurements are outside the accepted calculator range.
+- **Calculate on request.** A type=button Calculate BMI action and scoped Enter
+  handling prevent page submission/reload. Clear stale results after input edits.
+  Keep one-decimal display and unrounded adult category thresholds.
+- **Keep data local and informational.** No API transmission, storage, or workout
+  recommendation logic. All existing preference/equipment features are preserved.
+- Pediatric sources: [CDC BMI screening](https://www.cdc.gov/growth-chart-training/hcp/using-bmi/screening-measure.html)
+  and [CDC growth-chart guidance below 2](https://www.cdc.gov/growth-chart-training/hcp/using-growth-charts/who-using.html),
+  reviewed 2026-10-08.
+- No commit or push until user approval. Suggested message remains
+  "Refine BMI interface and height controls".

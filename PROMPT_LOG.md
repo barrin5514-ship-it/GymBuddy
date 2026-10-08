@@ -394,3 +394,86 @@ Approvals, completed work, and test results are recorded separately.
 - GitHub HTTPS connectivity and cached credential availability were verified without printing credentials. GitHub reports an empty branch list; both Git runtimes successfully returned no remote refs. No origin/main exists yet, so the approved push will establish it.
 - Reviewed all four existing outgoing commits plus the Part A diff. Files remain limited to the three app files and four documentation files; no potential secrets were found by inspection and pattern scanning.
 - Part B has not begun and will remain untouched for this task.
+
+
+## 2026-10-08 — Stage 4 Part B implementation and review
+
+- User requested feet/inches or centimeters, pounds or kilograms, automatic
+  informational BMI, missing/invalid input validation, desktop/mobile/keyboard
+  tests, preserved existing features, and updates to all four documentation files.
+- Confirmed clean main at 7c3896ba3e49b0ad79bca449d62a0c55fadef535 before edits.
+- Added Height and Weight, then Estimated BMI after the existing equipment
+  dropdown. No changes to goals, experience, equipment choices, or gym presets.
+- Added local conversion using exact inch/pound factors, full-precision metric
+  values in memory, validation messages, and inactive height-field disabling.
+- Added one-decimal BMI with unrounded adult cutoffs and explicit age-20+
+  confirmation before showing a category. Explained body-fat, informational,
+  and rounding limitations. No measurement transmission or storage.
+- Broad calculator input guardrails are height 50–300 cm and weight 10–700 kg;
+  these are disclosed and are not healthy-weight limits.
+- Initial verification found converted minimum-weight rounding conflicted with
+  native validity. Fixed by retaining full weight conversion precision and
+  setting exact converted bounds; the endpoint check now passes.
+- Screenshot review found flex styling overrode hidden on the feet/inches row.
+  Added a scoped hidden rule and direct unit-row visibility checks. Both modes
+  now show only their applicable height inputs.
+- Final Part B Chromium suite passed 143 checks: all four unit combinations,
+  repeated conversion round trips, known BMI examples, every adult category and
+  cutoff, unrounded boundary behavior, missing/zero/negative/nonnumeric/nonfinite
+  and out-of-range input, zero and fractional inches, invalid unit switching,
+  linked invalid states, age confirmation, keyboard order, inactive form data,
+  and responsive layout at 1280x800, 375x812, and 320x568.
+- Browser monitoring reported zero page/console errors, failed requests, and
+  external requests during measurement interactions.
+- Part A regression suite passed all 97 checks after the measurement changes;
+  goals, experience, gym paths/suggestions, equipment, keyboard, and layouts remain.
+- Part B commit and push approval is pending. No Part B commit or push performed;
+  workout generation remains unimplemented and disabled.
+
+
+## 2026-10-08 — Requested Estimated BMI UI corrections
+
+- Read the user's attached correction request. Confirmed main still at
+  7c3896ba3e49b0ad79bca449d62a0c55fadef535 with the seven uncommitted Part B
+  files. Preserved existing app features and the prior approved commit.
+- Reorganized all BMI controls into one compact Estimated BMI section: age,
+  height, weight, Calculate BMI, result. Removed the separate oversized
+  measurement border/panel and age-20 checkbox.
+- Added exclusive Under 20 / 20 and Older radio options. Under 20 requires
+  exact age 1 to below 20 (partial years allowed). Numeric BMI is shown without
+  adult categories or percentiles, with growth-chart and under-2 explanations.
+- Replaced large feet/inches inputs with two small native scrolling dropdowns
+  in one height area. Centimeters replaces them; valid conversions retain
+  metric precision and add a converted fractional-inch option when needed.
+- Preserved the existing weight input, lb/kg choices, unit switching,
+  conversion factors, numeric bounds, and validation; adjusted only spacing.
+- Calculation now requires Calculate BMI or Enter in a BMI control. Scoped
+  Enter handling prevents page reload/submission. Changing input clears stale BMI.
+- Reviewed mobile/desktop screenshots; controls are compact, within viewport,
+  have comfortable touch targets, and keep inactive height fields hidden.
+- Final Chromium correction suite passed 228 checks: age choices/switching,
+  exact age 1 and partial years, adult cutoff categories, pediatric/under-2
+  safeguards, both height units, dropdown choices and converted fractional
+  inches, all height/weight unit combinations and repeated round trips,
+  button/Enter/keyboard operation, invalid/missing/zero/negative/nonfinite and
+  range-boundary values, stale-result clearing, inactive form data, and
+  1280x800, 375x812, 320x568 layouts. Only the initial navigation occurred.
+- All 97 Part A regression checks passed. Ten fitness goals, three experience
+  levels, gym Yes/No, all gym paths/suggestions, multi-select equipment,
+  collapsed selection persistence, custom text, keyboard, and layouts remain.
+- Zero browser page/console errors, failed requests, or external requests.
+- Updated all four documentation files. Current limitations: no pediatric
+  percentiles, no ages below 1, and preserved measurement range limits.
+- No commit, push, or ExerciseDB workout generation. Await user approval.
+
+## 2026-10-08 — Part B correction commit and push approval
+
+- User explicitly approved: "commit and push approved".
+- Confirmed the working diff exactly matched the reviewed correction artifact
+  before recording this approval. Remote main matched local baseline 7c3896b.
+- Approved the complete Part B measurements and compact BMI corrections in the
+  seven reviewed app/documentation files. Syntax and whitespace checks passed;
+  the reviewed 228 BMI checks and 97 regression checks remain applicable.
+- This approval supersedes the pending-approval/no-push entries for Part B.
+- Authorized commit message: Refine BMI interface and height controls.
+- Workout generation remains outside this approval and has not begun.

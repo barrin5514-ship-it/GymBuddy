@@ -163,6 +163,64 @@
         </details>
       </fieldset>
 
+      <!-- One compact BMI group; calculation and measurements stay in this browser. -->
+      <fieldset id="bmi-section" aria-describedby="bmi-help">
+        <legend>Estimated BMI</legend>
+        <div class="bmi-control-group">
+          <span id="age-category-label">Age Category</span>
+          <div id="age-category" role="radiogroup" aria-labelledby="age-category-label" aria-describedby="age-error">
+            <label><input type="radio" id="age-under20" name="age-category" value="under20"> Under 20</label>
+            <label><input type="radio" id="age-adult" name="age-category" value="adult"> 20 and Older</label>
+          </div>
+          <div id="exact-age-details" hidden>
+            <label for="exact-age">Exact age (years)</label>
+            <input type="number" id="exact-age" name="exact-age" min="1" max="20" step="any" inputmode="decimal" disabled required aria-describedby="age-error age-help">
+            <small id="age-help">Age 1 or older; decimals allowed (for example, 1.5).</small>
+          </div>
+          <p id="age-error" class="measurement-error"></p>
+        </div>
+        <div id="measurements">
+          <div class="bmi-control-group">
+            <label for="height-unit">Height</label>
+            <select id="height-unit" name="height-unit">
+              <option value="ft-in">Feet and Inches</option>
+              <option value="cm">Centimeters</option>
+            </select>
+            <!-- Two native scrolling dropdowns share one compact height area. -->
+            <div id="height-control">
+              <div id="height-imperial">
+                <label for="height-feet">Feet
+                  <select id="height-feet" name="height-feet" required aria-describedby="height-error"><option value="">Choose</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
+                </label>
+                <label for="height-inches">Inches
+                  <select id="height-inches" name="height-inches" required aria-describedby="height-error"><option value="">Choose</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option></select>
+                </label>
+              </div>
+              <div id="height-metric" hidden>
+                <label for="height-cm">Centimeters</label>
+                <input type="number" id="height-cm" name="height-cm" min="50" max="300" step="any" inputmode="decimal" required disabled aria-describedby="height-error">
+              </div>
+            </div>
+            <p id="height-error" class="measurement-error"></p>
+          </div>
+          <div class="bmi-control-group">
+            <p><label for="weight-unit">Weight unit</label>
+              <select id="weight-unit" name="weight-unit">
+                <option value="lb">Pounds</option>
+                <option value="kg">Kilograms</option>
+              </select>
+            </p>
+            <label for="weight" id="weight-label">Weight (lb)</label>
+            <input type="number" id="weight" name="weight" min="22.0462262185" max="1543.2358352941" step="any" inputmode="decimal" required aria-describedby="weight-error">
+            <p id="weight-error" class="measurement-error"></p>
+          </div>
+        </div>
+        <button type="button" id="calculate-bmi">Calculate BMI</button>
+        <p id="bmi-result" role="status" aria-live="polite" aria-atomic="true">Choose an age category and enter measurements, then calculate.</p>
+        <p id="bmi-help">Informational only: BMI does not directly measure body fat and is not used alone to recommend workouts. Measurements stay local.</p>
+        <small>Input range: height 50–300 cm; weight 10–700 kg (about 22–1543 lb). Adult categories use unrounded BMI.</small>
+      </fieldset>
+
       <!-- Keep this disabled until JavaScript can generate a workout. -->
       <button type="submit" disabled aria-describedby="builder-status">Generate workout</button>
       <p id="builder-status">Workout generation is coming in a later development step.</p>

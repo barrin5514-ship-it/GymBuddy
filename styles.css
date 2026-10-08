@@ -52,3 +52,29 @@
   max-width: 100%;
   font: inherit;
 }
+
+/* Keep BMI compact without changing other GymBuddy sections or weight controls. */
+#bmi-section { min-width: 0; max-width: 38rem; margin-top: 1rem; padding: 0; border: 0; }
+#bmi-section legend { font-weight: bold; }
+#bmi-section .bmi-control-group { margin: 0.5rem 0; }
+#bmi-section p { margin: 0.35rem 0; }
+#bmi-section small { display: block; }
+#age-category { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+#age-category label { display: inline-flex; align-items: center; min-height: 44px; }
+#measurements input, #measurements select, #exact-age {
+  box-sizing: border-box; max-width: 100%; width: 12rem; min-height: 44px; font: inherit;
+}
+#measurements input { display: block; }
+#height-control { margin-top: 0.25rem; }
+#height-imperial { display: flex; gap: 0.5rem; align-items: center; }
+#height-imperial label { display: flex; align-items: center; gap: 0.25rem; }
+#height-imperial select { width: 5rem; }
+#height-imperial[hidden] { display: none; }
+#exact-age { width: 6rem; }
+#calculate-bmi { min-height: 44px; padding: 0.4rem 0.75rem; font: inherit; }
+.measurement-error { color: #9b1c1c; }
+.measurement-error:empty { display: none; }
+@media (max-width: 360px) {
+  #height-imperial select { width: 4.5rem; }
+  #height-imperial { gap: 0.35rem; }
+}

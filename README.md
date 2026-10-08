@@ -39,8 +39,8 @@ After editing CSS or JavaScript, use your browser's hard-refresh option
 if the page still behaves like the previous version because of cached files.
 
 The form follows this order: Fitness Goal, Experience Level, Gym Membership,
-then Available Equipment when applicable. The ten goals and three experience
-levels are unchanged. Height, weight, and BMI belong to a future stage.
+Available Equipment when applicable, then one compact Estimated BMI section.
+The ten goals and three experience levels are unchanged.
 
 Answer **Do you have a gym membership?** with Yes or No. No is the default
 and immediately shows the equipment selector. Yes reveals a gym
@@ -79,11 +79,57 @@ workout generation is added.
 The current page does not fetch exercises or display workout cards.
 An internet connection will be needed when API integration is implemented.
 
+## Estimated BMI
+
+The compact Estimated BMI section contains Age Category, Height, Weight,
+Calculate BMI, and the result, in that order. The age options are mutually
+exclusive: Under 20 or 20 and Older. Neither is assumed on first load.
+Under 20 reveals an exact-age input in years, accepting 1 to less than 20
+(including decimals such as 1.5). Switching to the adult option hides and
+disables exact age without erasing it.
+
+For Feet and Inches, two small native scrolling dropdowns share one compact
+height area. Choose feet and inches, including 0 inches for an exact foot.
+Centimeters replaces those dropdowns with one input in the same area. Valid
+measurements convert when switching units. A fractional-inch option marked
+"converted" is added when a centimeter height is not a whole inch, preserving
+accuracy instead of rounding it to a standard dropdown choice.
+
+The existing pounds/kilograms weight input, unit switching, and validation
+are preserved. Height accepts 50–300 cm total; weight accepts 10–700 kg or
+converted pounds. These are broad app input limits, not healthy-weight ranges.
+Invalid or missing values are rejected; an invalid unit switch clears the
+destination rather than reinterpreting the same number. Inactive height and
+age fields are hidden, disabled, and excluded from form data.
+
+Click **Calculate BMI**, or press Enter in a BMI input control. This never
+submits or reloads the Workout Builder. Changing an input clears the previous
+result until you calculate again. BMI is kilograms divided by meters squared,
+displayed to one decimal place (175 cm and 70 kg gives 22.9).
+
+For adults, categories use the unrounded result: below 18.5 Underweight;
+18.5 to below 25 Healthy weight; 25 to below 30 Overweight; 30 or more Obesity.
+A result can round to a boundary on screen while remaining below it.
+For under-20 users, only numerical BMI is shown. Pediatric interpretation
+requires age- and sex-specific growth charts; no percentile is invented.
+For ages 1 to below 2, the result explains that standard BMI-for-age categories
+do not apply and weight-for-length growth charts are typically used instead.
+
+BMI is informational only, does not directly measure body fat, and is not used
+alone to recommend workouts. This app neither stores nor transmits measurements
+or age to APIs. Limitations: no age below 1, no pediatric percentile/chart engine,
+and measurements must remain within the preserved input ranges above.
+
+Sources: [CDC adult categories](https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html),
+[CDC about BMI](https://www.cdc.gov/bmi/about/),
+[CDC pediatric screening](https://www.cdc.gov/growth-chart-training/hcp/using-bmi/screening-measure.html),
+and [CDC guidance below age 2](https://www.cdc.gov/growth-chart-training/hcp/using-growth-charts/who-using.html).
+
 ## Project files
 
 - [index.html](./index.html) contains the commented page structure and form.
-- [styles.css](./styles.css) provides spacing and narrow-screen sizing for equipment and gym controls.
-- [script.js](./script.js) manages equipment selections, gym suggestions, and custom fields.
+- [styles.css](./styles.css) provides spacing and narrow-screen sizing for equipment, gym, and measurement controls.
+- [script.js](./script.js) manages equipment, gyms, measurement validation, unit conversions, and local BMI.
 - [README.md](./README.md) explains the project and how to open it.
 - [PROMPT_LOG.md](./PROMPT_LOG.md) records prompt summaries, corrections, approvals, and verified results.
 - [CODE_EXPLAINED.md](./CODE_EXPLAINED.md) explains how the current code works.

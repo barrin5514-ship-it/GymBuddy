@@ -1,7 +1,7 @@
 # GymBuddy Code Explained
 
-This guide describes the current preference form. Workout generation,
-measurements, and BMI are not implemented yet.
+This guide describes the preference form, measurements, and local informational
+BMI. Workout generation is not implemented yet.
 
 ## HTML: the page and its controls
 
@@ -92,3 +92,48 @@ The Escape key closes an open dropdown and moves focus to its summary.
 When the equipment section becomes inapplicable, JavaScript also closes the
 dropdown so it returns compactly when shown again. Adding gym suggestions
 updates the summary even when the dropdown stays closed.
+
+
+## Compact Estimated BMI section
+
+One fieldset contains all BMI controls: age category, height, the preserved
+weight controls, the Calculate BMI button, and a polite status result. The
+radio buttons share a name, so only one age category can be selected. Exact
+age is shown only for Under 20; hidden age is disabled but its text is retained.
+Age is entered in years from 1 to less than 20; decimals support partial years.
+
+The height area holds two compact native select controls for feet/inches,
+or one centimeter input. Native dropdowns support keyboard navigation and
+scrolling choices. syncHeightVisibility hides and disables inactive controls.
+setConvertedInches adds a temporary fractional option when required by a
+conversion, removes the previous converted option, and uses textContent to
+add the label safely. Standard choices remain feet 0–9 and inches 0–11.
+
+readMeasurement handles number inputs and selected dropdown values; it rejects
+missing, badInput, and nonfinite numbers instead of parsing partial text.
+readHeight validates total height 50–300 cm and valid feet/inches. readWeight
+preserves the original 10–700 kg range, pounds conversion, and validation.
+showMeasurementError links short errors to controls using aria-describedby,
+custom validity, and aria-invalid. Nothing is marked invalid on initial load.
+
+heightMeters and weightKg retain full-precision metric measurements in memory.
+One inch is 0.0254 meters; one pound is 0.45359237 kg. Unit switches convert
+from those values to prevent cumulative drift. Converted height controls use
+six decimal places; weight keeps full converted precision at range endpoints.
+Invalid entries cannot be converted and clear the destination instead.
+
+calculateBmi runs only from the button or Enter in BMI inputs/selects.
+The button has type=button. The BMI section's Enter handler prevents implicit
+form submission, so calculations do not navigate or reload the page. Input
+changes clear old results, preventing a BMI from describing outdated entries.
+
+The function validates age and measurements, calculates kg / meters squared,
+and displays one decimal. Adult cutoffs use the unrounded BMI against 18.5,
+25, and 30. Under-20 results have no adult category or invented percentile.
+Ages below 2 get a specific explanation about BMI-for-age and growth charts;
+older pediatric results explain the need for age- and sex-specific charts.
+
+Scoped spacing removes the old large measurement border and separate BMI panel.
+Feet/inches remain side by side on mobile, with 44px control heights. Weight
+input sizes and behavior are retained. The section makes no network requests,
+stores no age/measurements, and does not affect workout generation or equipment.
