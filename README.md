@@ -1,6 +1,6 @@
 # GymBuddy
 
-Version 0.1 — initial HTML foundation.
+Version 0.1 — workout preferences foundation.
 
 GymBuddy is a beginner-friendly fitness app for Next Chapter Week 4
 and the foundation of a future AI-powered personal trainer.
@@ -9,8 +9,8 @@ The immediate presentation goal is a functional Workout Builder.
 ## Technology
 
 HTML, CSS, and vanilla JavaScript, using the ExerciseDB public API.
-This starter uses HTML only. No framework, package installation,
-API key, or build step is required for the initial form.
+The preference form now uses HTML, a small stylesheet, and JavaScript.
+No framework, package installation, API key, or build step is required.
 
 ## App areas
 
@@ -21,8 +21,31 @@ API key, or build step is required for the initial form.
 
 ## Open locally
 
-Open [index.html](./index.html) in a browser, for example by double-clicking
-it in File Explorer. Select a fitness goal, experience level, and equipment.
+For the verified local preview, open a terminal in the project folder and
+use Python's built-in web server (Python is already installed on this machine):
+
+```powershell
+py -m http.server 8765 --bind 127.0.0.1
+```
+
+Open [GymBuddy locally](http://127.0.0.1:8765/index.html) in your browser.
+Keep the terminal running while using the app; press Ctrl+C there to stop
+the server. It listens only on this computer and needs no package installation.
+
+Keep the HTML, CSS, and JavaScript files together in the project folder.
+The integrated browser failed to load the linked CSS and JavaScript through
+a direct file URL; the local-server preview loaded them successfully.
+
+The form offers ten fitness goals and three experience levels. Check all
+equipment available to you. Selecting No Equipment / Bodyweight clears the
+other choices, and clearing the last equipment choice restores No Equipment.
+Select Other Equipment to enter custom details; temporarily hiding the
+field preserves its text but excludes it from the active form data.
+These interactions run locally and require JavaScript to be enabled.
+
+Gym Membership is currently a checkbox only. Gym choices and equipment
+suggestions will be added in the next stage.
+
 The Generate workout button is intentionally disabled until JavaScript
 workout generation is added.
 
@@ -32,12 +55,12 @@ An internet connection will be needed when API integration is implemented.
 ## Project files
 
 - [index.html](./index.html) contains the commented page structure and form.
+- [styles.css](./styles.css) provides spacing and narrow-screen sizing for equipment controls.
+- [script.js](./script.js) manages equipment selections and the custom equipment field.
 - [README.md](./README.md) explains the project and how to open it.
 - [PROMPT_LOG.md](./PROMPT_LOG.md) records prompt summaries, corrections, approvals, and verified results.
-
-Planned files for later steps: `styles.css`, `script.js`,
-`CODE_EXPLAINED.md`, and `DECISION_LOG.md`.
-The explanation and decision logs will document the code as it grows.
+- [CODE_EXPLAINED.md](./CODE_EXPLAINED.md) explains how the current code works.
+- [DECISION_LOG.md](./DECISION_LOG.md) records implementation decisions and their reasons.
 
 ## Exercise data
 

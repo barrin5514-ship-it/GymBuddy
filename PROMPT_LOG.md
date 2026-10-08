@@ -145,3 +145,67 @@ Approvals, completed work, and test results are recorded separately.
 - The earlier staged plan permits proceeding to equipment after this commit.
   The equipment stage will require its own review and commit approval.
 - Push approval: Not granted. Do not push to GitHub.
+
+## 2026-10-08 — Multiple equipment selections stage
+
+- Completed the approved fitness-goal commit as 09d4eb3, "Expand fitness
+  goal options". Git confirmed a clean working tree before this stage.
+- Authorization: Continue the equipment stage from the user's earlier
+  instructions after the preceding approved commit. No equipment commit
+  or push has been authorized.
+- Previewed the proposed HTML, JavaScript, small CSS, and documentation
+  changes before applying them.
+- Replaced the single equipment dropdown with the eleven requested
+  checkbox choices. No Equipment / Bodyweight is selected by default.
+- Added exclusive No Equipment behavior and restored it when the last
+  other equipment choice is unchecked.
+- Other Equipment reveals a labeled text field. Hiding it preserves its
+  text but disables the input, excluding it from focus and form data.
+- Added beginner-friendly comments for the HTML, CSS, and JavaScript.
+- Updated README and created the previously requested CODE_EXPLAINED.md
+  and DECISION_LOG.md now that the form includes JavaScript interactions.
+- Gym Membership is a checkbox only at this stage. Gym options, equipment
+  suggestions, measurements, BMI, and workout generation are not implemented.
+  The Generate workout button remains disabled.
+- User follow-up (verbatim): "continue". Continued testing this equipment stage.
+- Preview issue: The initial file-URL preview loaded HTML but failed to load
+  linked CSS and JavaScript with ERR_UNEXPECTED. The initial README advice
+  to open the file directly was not sufficient for this integrated browser.
+- Correction: Started Python's built-in server on 127.0.0.1:8765 and updated
+  README with the verified command. The sandbox initially blocked Python;
+  the approved retry started the server. No project dependencies were installed.
+- The first local-server navigation timed out, but subsequent checks confirmed
+  HTTP 200 for HTML, CSS, and JavaScript and that the browser loaded both assets.
+- Equipment tests: All 25 checks passed for the eleven labels/order/values,
+  default choice, accumulating multiple selections, exclusive No Equipment,
+  restoring it when no other boxes remain checked, custom text visibility,
+  preserving text while hidden, excluding disabled text from form data,
+  and Enter not submitting the unfinished form.
+- Keyboard/regression tests: All 41 checks passed for the ten existing goals,
+  three experience levels, Tab/Space operation of each checkbox, focus on
+  custom details, hiding custom details, preserving goal/experience choices,
+  the disabled Generate workout button, and empty workout results.
+- Layout checks with Other Equipment visible passed at 1280 by 800,
+  375 by 812, and 320 by 568 pixels; no horizontal overflow was found.
+- Final monitored local-server reload: No console/page errors or failed
+  requests. HTML, CSS, and JavaScript returned HTTP 200, the styles and
+  script loaded, No Equipment remained the default, and Generate stayed disabled.
+- node --check script.js passed. Reviewed tracked-file diffs and the new
+  source/documentation files; a separate read-only review found no issues.
+- No equipment-code defects were identified in these checks; no feature
+  code corrections were needed after testing. The preview instructions
+  were corrected as described above.
+- Commit approval for the equipment stage: Not granted. Await user review.
+- Push approval: Not granted. Do not push to GitHub.
+
+## 2026-10-08 — Equipment commit approved
+
+- User message (verbatim): "commit". The attached Weight Bench element
+  provided context and did not request a code change.
+- Authorized action: Commit the reviewed equipment stage locally with
+  message "Add multiple equipment selections".
+- This entry records the approval. The previously tested implementation
+  remains the version submitted for this commit.
+- Proceed to the gym membership stage under the earlier staged plan;
+  that stage requires its own testing, review, and commit approval.
+- Push approval: Not granted. Do not push to GitHub.

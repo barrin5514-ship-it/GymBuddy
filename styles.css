@@ -1,0 +1,18 @@
+/* Let this group shrink to fit a narrow phone screen. */
+#equipment-options {
+  min-width: 0;
+}
+
+/* Put each clickable checkbox label on its own comfortably spaced row. */
+.equipment-option {
+  display: block;
+  padding: 0.5rem 0;
+}
+
+/* Keep the custom equipment field inside the form on small screens. */
+#other-equipment {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 24rem;
+  font: inherit;
+}

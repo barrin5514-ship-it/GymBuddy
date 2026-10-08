@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GymBuddy</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- defer waits until the HTML is ready before running our form interactions. -->
+  <script src="script.js" defer></script>
 </head>
 <body>
   <!-- The header introduces the app before the main page content. -->
@@ -47,15 +50,66 @@
         </select>
       </p>
 
-      <!-- Equipment choices will help us select matching exercises from the API. -->
-      <p>
-        <label for="equipment">Available equipment</label>
-        <select id="equipment" name="equipment">
-          <option value="none">No equipment</option>
-          <option value="dumbbell">Dumbbells</option>
-          <option value="resistance band">Resistance band</option>
-        </select>
-      </p>
+      <!-- A fieldset groups related controls; checkboxes allow more than one choice. -->
+      <fieldset id="equipment-options" aria-describedby="equipment-help">
+        <legend>Available Equipment</legend>
+        <p id="equipment-help">Choose everything available to you. No Equipment / Bodyweight is used by itself.</p>
+
+        <!-- The shared name groups the selections. Each value identifies one choice. -->
+        <label class="equipment-option" for="equipment-none">
+          <input type="checkbox" id="equipment-none" name="equipment" value="none" checked>
+          No Equipment / Bodyweight
+        </label>
+        <label class="equipment-option" for="equipment-dumbbell">
+          <input type="checkbox" id="equipment-dumbbell" name="equipment" value="dumbbell">
+          Dumbbells
+        </label>
+        <label class="equipment-option" for="equipment-barbell">
+          <input type="checkbox" id="equipment-barbell" name="equipment" value="barbell">
+          Barbells and Weight Plates
+        </label>
+        <label class="equipment-option" for="equipment-kettlebell">
+          <input type="checkbox" id="equipment-kettlebell" name="equipment" value="kettlebell">
+          Kettlebells
+        </label>
+        <label class="equipment-option" for="equipment-band">
+          <input type="checkbox" id="equipment-band" name="equipment" value="resistance band">
+          Resistance Bands
+        </label>
+        <label class="equipment-option" for="equipment-jump-rope">
+          <input type="checkbox" id="equipment-jump-rope" name="equipment" value="jump-rope">
+          Jump Rope
+        </label>
+        <label class="equipment-option" for="equipment-pull-up-bar">
+          <input type="checkbox" id="equipment-pull-up-bar" name="equipment" value="pull-up-bar">
+          Pull-Up Bar
+        </label>
+        <label class="equipment-option" for="equipment-bench">
+          <input type="checkbox" id="equipment-bench" name="equipment" value="weight-bench">
+          Weight Bench
+        </label>
+        <label class="equipment-option" for="equipment-cardio">
+          <input type="checkbox" id="equipment-cardio" name="equipment" value="cardio-equipment">
+          Cardio Equipment
+        </label>
+        <label class="equipment-option" for="equipment-gym">
+          <input type="checkbox" id="equipment-gym" name="equipment" value="gym-membership">
+          Gym Membership
+        </label>
+        <label class="equipment-option" for="equipment-other">
+          <input type="checkbox" id="equipment-other" name="equipment" value="other">
+          Other Equipment
+        </label>
+
+        <!-- Hidden controls are also disabled so unused details are not part of form data. -->
+        <div id="other-equipment-details" hidden>
+          <label for="other-equipment">Describe your other equipment</label>
+          <p>
+            <input type="text" id="other-equipment" name="other-equipment"
+              placeholder="e.g., medicine ball, cable machine" disabled>
+          </p>
+        </div>
+      </fieldset>
 
       <!-- Keep this disabled until JavaScript can generate a workout. -->
       <button type="submit" disabled aria-describedby="builder-status">Generate workout</button>
