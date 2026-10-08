@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- These settings support readable text, mobile screens, and the browser tab title. -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymBuddy</title>
+</head>
+<body>
+  <!-- The header introduces the app before the main page content. -->
+  <header>
+    <h1>GymBuddy</h1>
+    <p>A simple place to start your next workout.</p>
+  </header>
+
+  <!-- This main area starts the Workout Builder. Other app areas will come later. -->
+  <main id="workout-builder">
+    <h2>Choose your workout preferences</h2>
+
+    <!-- An id gives JavaScript a way to find an element when we add behavior later. -->
+    <form id="workout-form">
+      <!-- Each label's for value matches a control's id, connecting its name to the control. -->
+      <p>
+        <label for="goal">Fitness goal</label>
+        <select id="goal" name="goal">
+          <option value="general-fitness">General fitness</option>
+          <option value="strength">Build strength</option>
+          <option value="muscle">Build muscle</option>
+        </select>
+      </p>
+
+      <!-- Option text is shown to users; its value is what JavaScript will read. -->
+      <p>
+        <label for="experience">Experience level</label>
+        <select id="experience" name="experience">
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </p>
+
+      <!-- Equipment choices will help us select matching exercises from the API. -->
+      <p>
+        <label for="equipment">Available equipment</label>
+        <select id="equipment" name="equipment">
+          <option value="none">No equipment</option>
+          <option value="dumbbell">Dumbbells</option>
+          <option value="resistance band">Resistance band</option>
+        </select>
+      </p>
+
+      <!-- Keep this disabled until JavaScript can generate a workout. -->
+      <button type="submit" disabled aria-describedby="builder-status">Generate workout</button>
+      <p id="builder-status">Workout generation is coming in a later development step.</p>
+    </form>
+
+    <!-- aria-labelledby names this section for assistive tools such as screen readers. -->
+    <section aria-labelledby="workout-heading">
+      <h2 id="workout-heading">Your workout</h2>
+      <!-- JavaScript will place exercise cards inside this results area later. -->
+      <div id="workout-results"></div>
+    </section>
+  </main>
+
+  <!-- Credit the provider whose exercise data we will use. -->
+  <footer>
+    <p>Exercise data provided by
+      <a href="https://ascendapi.com">AscendAPI / ExerciseDB</a>.
+    </p>
+  </footer>
+</body>
+</html>
