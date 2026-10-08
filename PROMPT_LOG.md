@@ -90,3 +90,58 @@ Approvals, completed work, and test results are recorded separately.
 - The previously recorded browser test results apply to the unchanged
   HTML. No new feature tests were run for this documentation-only update.
 - Push approval: Not granted. Do not push to GitHub.
+
+## 2026-10-07 — Expand workout preferences: fitness goals stage
+
+- Instructions received (summary): Expand the goal dropdown to ten choices;
+  retain the experience levels; add multiple equipment selections with
+  exclusive No Equipment and custom Other Equipment; add optional gym
+  selections with editable equipment suggestions; and add validated height,
+  weight, unit conversions, and an informational adult BMI calculator.
+- The user specified that BMI must not determine workout recommendations,
+  all calculations must stay local, and workout generation must remain disabled.
+- Requested testing covers each stage's inputs, validation, conversions,
+  BMI accuracy/categories, keyboard access, mobile layout, console errors,
+  and preservation of existing behavior. Later-stage tests will be run only
+  when those features have been implemented.
+- Work must proceed in separate goal, equipment, gym, and measurement/BMI
+  stages, with tests, diff review, and explicit commit approval for each.
+  The next stage must wait until the preceding commit is approved and made.
+- Pre-change checks: Confirmed starter commit be6f647 with message
+  "Add initial GymBuddy form and project notes" and a clean working tree.
+- This stage implements only the ten requested fitness goals, in the
+  requested order, with General Fitness first/default. Existing values
+  general-fitness, muscle, and strength are preserved.
+- Added one HTML comment explaining default selection and option values.
+  Experience levels, the current equipment dropdown, and the disabled
+  Generate workout button are unchanged.
+- README remains accurate for this small change and was not edited.
+- Browser option/regression testing: All 26 checks passed, including exact
+  goal labels/order/values, the default goal, selection of all ten goals,
+  all three experience levels, the existing equipment choices, the disabled
+  Generate workout button, empty results, and the unchanged page title.
+- Keyboard testing: All 14 checks passed. The goal label focuses its
+  selector, Home and ArrowDown reach every goal, and Tab continues through
+  experience and equipment to the attribution link, skipping the disabled button.
+- Layout checks passed at 1280 by 800, 375 by 812, and 320 by 568 pixels:
+  every selector was visible and within the viewport, with no horizontal overflow.
+- Reload monitoring found no console errors, page errors, or failed requests.
+  Only the local HTML file was requested. General Fitness remained selected
+  and Generate workout remained disabled after reload.
+- Reviewed the Git diff: Only the goal options/comment and this log changed.
+  git diff --check reported no whitespace errors.
+- Mistakes encountered in this stage: None identified. No corrective code
+  changes were needed after testing.
+- Commit approval for this stage: Not granted. Await the user's review.
+- Push approval: Not granted. Do not push to GitHub.
+
+## 2026-10-08 — Fitness goals commit approved
+
+- User message (verbatim): "commit".
+- Authorized action: Commit the reviewed fitness-goal stage locally with
+  message "Expand fitness goal options".
+- The HTML diff is unchanged from the tested and reviewed version.
+  This log entry records the approval; no new feature tests were needed.
+- The earlier staged plan permits proceeding to equipment after this commit.
+  The equipment stage will require its own review and commit approval.
+- Push approval: Not granted. Do not push to GitHub.
