@@ -50,7 +50,55 @@
         </select>
       </p>
 
-      <!-- A fieldset groups related controls; checkboxes allow more than one choice. -->
+      <!-- Radio buttons with the same name allow only one membership answer. -->
+      <fieldset id="gym-membership">
+        <legend>Gym Membership</legend>
+        <p id="gym-membership-question">Do you have a gym membership?</p>
+        <div role="radiogroup" aria-labelledby="gym-membership-question">
+          <label class="membership-option" for="gym-membership-yes">
+            <input type="radio" id="gym-membership-yes" name="gym-membership" value="yes">
+            Yes
+          </label>
+          <label class="membership-option" for="gym-membership-no">
+            <input type="radio" id="gym-membership-no" name="gym-membership" value="no" checked>
+            No
+          </label>
+        </div>
+
+        <!-- Only a Yes answer reveals these gym-specific controls. -->
+        <div id="gym-membership-details" hidden>
+          <p>
+            <label for="gym">Your gym</label>
+            <select id="gym" name="gym" aria-describedby="gym-help" disabled>
+              <option value="">Choose your gym</option>
+              <option value="planet-fitness">Planet Fitness</option>
+              <option value="crunch-fitness">Crunch Fitness</option>
+              <option value="la-fitness">LA Fitness</option>
+              <option value="other">Other Gym</option>
+            </select>
+          </p>
+          <p id="gym-help">Equipment varies by location. Changing gyms keeps your current equipment choices; adjust the checkboxes below to match your location.</p>
+
+          <div id="other-gym-details" hidden>
+            <label for="other-gym-name">Your gym name</label>
+            <p><input type="text" id="other-gym-name" name="other-gym-name" disabled></p>
+            <p>Choose your available equipment manually using the checkboxes below. Use Other Equipment for anything missing.</p>
+          </div>
+
+          <!-- Suggestions become selections only when the user chooses to add them. -->
+          <div id="gym-suggestions" hidden>
+            <h3>Suggested equipment</h3>
+            <p>This is a starting list, not a complete inventory. Confirm what is available at your location before adding it.</p>
+            <ul id="gym-equipment-list"></ul>
+            <button type="button" id="add-gym-equipment" disabled>Add suggested equipment</button>
+            <p>Add or remove items using the Available Equipment checkboxes below.</p>
+          </div>
+          <!-- Announce added suggestions without moving keyboard focus. -->
+          <p id="gym-status" role="status"></p>
+        </div>
+      </fieldset>
+
+      <!-- Reuse this checklist for No membership and for customizing a selected gym. -->
       <fieldset id="equipment-options" aria-describedby="equipment-help">
         <legend>Available Equipment</legend>
         <p id="equipment-help">Choose everything available to you. No Equipment / Bodyweight is used by itself.</p>
@@ -91,10 +139,6 @@
         <label class="equipment-option" for="equipment-cardio">
           <input type="checkbox" id="equipment-cardio" name="equipment" value="cardio-equipment">
           Cardio Equipment
-        </label>
-        <label class="equipment-option" for="equipment-gym">
-          <input type="checkbox" id="equipment-gym" name="equipment" value="gym-membership">
-          Gym Membership
         </label>
         <label class="equipment-option" for="equipment-other">
           <input type="checkbox" id="equipment-other" name="equipment" value="other">

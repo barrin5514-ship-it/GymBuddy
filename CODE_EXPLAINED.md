@@ -1,7 +1,7 @@
 # GymBuddy Code Explained
 
 This guide describes the current preference form. Workout generation,
-gym suggestions, measurements, and BMI are not implemented yet.
+measurements, and BMI are not implemented yet.
 
 ## HTML: the page and its controls
 
@@ -10,6 +10,9 @@ empty workout results area, and exercise-data attribution.
 
 - A `select` shows a dropdown for goals or experience. The first option
   is the default; each option's `value` identifies the selected choice.
+- A separate Gym Membership fieldset follows Experience Level. Its Yes/No
+  radios share a name, so selecting one automatically deselects the other.
+  No is the default; membership is no longer an equipment checkbox.
 - The equipment `fieldset` groups related checkboxes. Its `legend` names
   the group, and each label makes its checkbox easier to identify and click.
 - Checkboxes share `name="equipment"` because they belong to the same group.
@@ -37,7 +40,8 @@ The rest of the page keeps its existing appearance and browser focus indicators.
 1. If No Equipment was just checked, clear all other equipment boxes.
 2. Use `some()` to check whether any other box is checked. If none are,
    check No Equipment; otherwise, uncheck it. The `!` symbol means "not".
-3. Show and enable the custom text field only when Other Equipment is checked.
+3. Update gym and equipment visibility to match the membership answer and gym choice.
+   Show and enable custom equipment text only when that choice is visible and checked.
 
 The function also runs once when the page opens to synchronize the controls.
 The `change` event works for mouse and keyboard use. Hiding custom details
@@ -46,3 +50,30 @@ does not erase their text, but the disabled field is not included in form data.
 The script does not fetch data, save preferences, or generate workouts.
 Equipment values are app identifiers; future API matching must account
 for the API's actual labels and any additional equipment an exercise needs.
+
+## Gym membership and suggestions
+
+`gymEquipmentSuggestions` is a JavaScript object containing a small array
+of equipment values for each named gym. These are local suggestions and
+are not a live inventory of any location.
+
+`updateGymDetails` keeps the membership question visible and shows gym details
+only for Yes. It shows the shared equipment checklist for No, or for Yes after
+a gym is chosen. Hidden inputs are disabled to exclude inactive values from
+form data while preserving the user's entries for later.
+
+When a named gym is selected, it builds a suggested list with the same text
+as the equipment labels. `textContent` adds plain text to each list item;
+`replaceChildren()` clears the old list before rebuilding it.
+
+The **Add suggested equipment** button checks the matching equipment boxes
+while preserving everything the user already selected. It then synchronizes
+No Equipment and the conditional fields. A `role="status"` message announces
+the update without moving keyboard focus.
+
+Selecting Other Gym shows its name field and no suggested list. Hidden
+custom fields keep their text but are disabled, so unused details are not
+included in form data. Changing gyms never automatically changes equipment.
+The user can adjust the equipment checkboxes whenever the checklist is shown.
+No Equipment only affects equipment checkboxes, so it never changes the
+separate Yes/No answer or hides an already selected gym.

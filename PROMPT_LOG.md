@@ -209,3 +209,127 @@ Approvals, completed work, and test results are recorded separately.
 - Proceed to the gym membership stage under the earlier staged plan;
   that stage requires its own testing, review, and commit approval.
 - Push approval: Not granted. Do not push to GitHub.
+
+## 2026-10-08 — Gym membership stage
+
+- Completed the approved equipment commit as 48aa02a, "Add multiple
+  equipment selections", and confirmed a clean working tree.
+- Authorization: Proceed with gym membership under the earlier staged plan.
+  No commit for this new stage and no push have been authorized.
+- Reviewed official gym equipment descriptions to choose partial local
+  presets. Sources and mapping decisions are recorded in DECISION_LOG.md.
+- Previewed the proposed conditional dropdown, suggestions, custom name,
+  small styling changes, and documentation updates before implementation.
+- Added Planet Fitness, LA Fitness, Crunch Fitness, and Other Gym choices,
+  shown only when Gym Membership is selected.
+- Named gyms show suggested equipment. Add suggested equipment merges it
+  into the user's existing choices; users can add or remove any checkbox.
+  Changing gyms does not automatically change equipment selections.
+- Other Gym shows a gym-name field and leaves equipment selection manual.
+  Hidden gym fields are disabled and excluded from form data while retaining text.
+- Location differences are explained in the interface. Presets stay local;
+  no gym API, dependencies, measurement/BMI logic, or workout generation were added.
+- Updated README, CODE_EXPLAINED, and DECISION_LOG for this stage.
+- Preview setup: The previous local server was no longer running; restarted
+  the same Python server on 127.0.0.1:8765 for this stage's checks.
+- Initial failed check: Selecting Gym Membership did not reveal the dropdown.
+  Inspection showed the browser was running the previous cached equipment-only
+  script while the server had the new gym code. Refreshed the cached script
+  and stylesheet, reloaded, and confirmed updateGymDetails was loaded.
+- Test mistake: The next attempt used a role locator that excluded the hidden
+  Add button, so its disabled-state assertion timed out. Corrected the test
+  to target the existing button by its ID; no app-code change was needed.
+- Gym behavior checks: All 41 passed after those corrections. Covered all
+  three named presets, optional merging, manual add/remove, repeated adds,
+  switching gyms without losing choices, Other Gym naming and manual equipment,
+  retention/exclusion of hidden fields, and No Equipment conflicts.
+- Keyboard/regression checks: All 39 passed. Covered every goal and experience
+  level, equipment accumulation, all gym options via arrow keys, Tab focus,
+  activating Add with Space, status feedback, and the disabled Generate button.
+- Six layout checks passed: Named-gym suggestions and Other Gym each fit
+  at 1280 by 800, 375 by 812, and 320 by 568 pixels without horizontal overflow.
+- Final monitored reload and gym interactions produced no console/page errors
+  or failed requests. Observed responses were local, the current gym code
+  remained loaded, and Generate workout stayed disabled.
+- JavaScript syntax and Git whitespace checks passed. Reviewed the changes
+  against the equipment commit; no unrelated feature changes were found.
+- Updated README with a hard-refresh note for stale development assets.
+  No gym feature-code corrections were needed after the implementation.
+- Commit approval for the gym stage: Not granted. Await user review.
+- Push approval: Not granted. Do not push to GitHub.
+
+## 2026-10-08 — Stage 2 commit verification and scope clarification
+
+- User request summary: Approve only Stage 2, verify the intended changes
+  and check for unexpected or sensitive content, commit with message
+  "Add multiple equipment selections", report the hash and status, do not
+  push, and do not begin Stage 3 yet.
+- Verified Stage 2 was already committed as
+  48aa02af3b88b04ea1d31743b2b7ad5a06a1da28 with the exact requested message.
+- Reviewed that commit's full diff: It contains the equipment implementation,
+  styling, and related documentation. No gym-stage implementation or obvious
+  credentials were found in the commit. Whitespace checks passed.
+- Stage 3 had already been implemented in the preceding turn and remains
+  outside the Stage 2 commit as unstaged changes. Left that code untouched
+  and stopped further development in accordance with the user's latest scope.
+- Did not create a duplicate commit or amend the existing commit. No push
+  was performed. This verification entry remains uncommitted.
+- Git status before this log entry: On main, with seven modified, unstaged
+  files from the prior gym stage and no staged changes.
+
+## 2026-10-08 — Correct Stage 3 gym membership layout
+
+- User request summary: Preserve the seven unfinished Stage 3 files and fix
+  the form order to Goal, Experience, separate Gym Membership, then conditional
+  Available Equipment. Do not recreate Stage 2, commit, push, or begin Stage 4.
+- Reviewed the existing changes; HEAD remained the approved Stage 2 commit
+  48aa02a, with seven modified files and no staged changes.
+- Previewed the correction before editing. Updated the existing Stage 3
+  controls and handlers in place, preserving presets, customization, and comments.
+- Replaced the membership equipment checkbox with Yes/No radios directly
+  after Experience Level. No is the default and shows the equipment checklist.
+- Yes reveals Planet Fitness, Crunch Fitness, LA Fitness, and Other Gym in
+  that order; choosing a gym reveals the shared customizable equipment list.
+- Preserved all ten remaining equipment choices, multiple selection, and
+  exclusive No Equipment behavior. No Equipment no longer changes membership.
+- Kept the existing Add suggested equipment action and Other Gym/Other
+  Equipment text fields. Switching paths preserves choices and excludes hidden data.
+- Updated README, CODE_EXPLAINED, and DECISION_LOG to describe the corrected flow.
+- User follow-up (verbatim): "continue". Continued the correction and tests;
+  this was not treated as commit or push approval.
+- Preview setup: Restarted the existing local-server command because the
+  previous server was no longer responding. Refreshed cached CSS/JavaScript
+  before testing and verified the new radios and conditional-equipment code.
+- Test correction: The first visibility test checked isDisabled() on the
+  fieldset itself, which returned false even with its disabled property set.
+  Verified that its input controls were disabled and absent from form data;
+  corrected the assertion to check the contained input. No app-code fix was needed.
+- All 42 behavior checks passed on the corrected run: Section order,
+  Yes/No paths, exact gym choices, each preset, custom equipment and gym name,
+  retained choices, hidden-data exclusion, and No Equipment exclusivity.
+- All 49 keyboard/regression checks passed: Every goal and experience option,
+  membership radio arrows, gym dropdown order, Tab order, each equipment
+  checkbox, custom fields, keyboard Add, and preservation of preferences.
+- All 12 layout checks passed at desktop 1280 by 800 and mobile 375 by 812
+  and 320 by 568: No, Yes without a gym, a named gym, and Other Gym.
+  Controls stayed within the viewport and sections stayed in the required order.
+- The final monitored reload and interactions had no console/page errors
+  or failed requests. Observed responses were local; the current code was
+  loaded and Generate workout remained disabled.
+- JavaScript syntax and Git whitespace checks passed. Reviewed the cumulative
+  Stage 3 diff against 48aa02a; the existing presets and customization were
+  preserved while the membership layout and related documentation were corrected.
+- No Stage 4 fields, BMI calculations, or workout generation were added.
+- Commit and push approval: Not granted. Await user review of this Stage 3 change.
+
+## 2026-10-08 — Corrected Stage 3 commit approved
+
+- User message (verbatim): "approved commit stage 3".
+- Authorized action: Commit the reviewed, corrected Stage 3 gym membership work.
+- Confirmed the seven-file working diff exactly matched the review diff before
+  adding this approval entry. No implementation changes or new feature tests
+  were needed; the previously recorded test results still apply.
+- Commit message: Add gym membership preferences and equipment suggestions.
+- This approval does not authorize Stage 4 or workout generation. Stop after
+  confirming the commit and Git status.
+- Push approval: Not granted. Do not push to GitHub.

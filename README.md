@@ -35,16 +35,37 @@ the server. It listens only on this computer and needs no package installation.
 Keep the HTML, CSS, and JavaScript files together in the project folder.
 The integrated browser failed to load the linked CSS and JavaScript through
 a direct file URL; the local-server preview loaded them successfully.
+After editing CSS or JavaScript, use your browser's hard-refresh option
+if the page still behaves like the previous version because of cached files.
 
-The form offers ten fitness goals and three experience levels. Check all
-equipment available to you. Selecting No Equipment / Bodyweight clears the
-other choices, and clearing the last equipment choice restores No Equipment.
-Select Other Equipment to enter custom details; temporarily hiding the
-field preserves its text but excludes it from the active form data.
+The form follows this order: Fitness Goal, Experience Level, Gym Membership,
+then Available Equipment when applicable. The ten goals and three experience
+levels are unchanged. Height, weight, and BMI belong to a future stage.
+
+Answer **Do you have a gym membership?** with Yes or No. No is the default
+and immediately shows the existing equipment checklist. Yes reveals a gym
+dropdown: Planet Fitness, Crunch Fitness, LA Fitness, or Other Gym. The
+equipment checklist appears after you choose a gym.
+
+A named gym shows a suggested equipment list. Use **Add suggested equipment**
+if it matches your location, then check or uncheck equipment below. Adding
+suggestions preserves existing choices. Changing gyms or switching Yes/No
+does not erase your equipment selections.
+
+Other Gym reveals a name field and lets you choose equipment manually.
+Selecting No hides and disables gym-specific fields without erasing the
+selected gym or typed name. Hidden equipment fields are also disabled while
+Yes is selected without a gym choice, so inactive values are excluded from form data.
+
+No Equipment / Bodyweight is exclusive to other equipment choices. It does
+not change your membership answer: a gym member can choose bodyweight only.
+Clearing the last equipment choice restores No Equipment. Other Equipment
+reveals a custom text field; hidden text is retained but excluded from form data.
 These interactions run locally and require JavaScript to be enabled.
 
-Gym Membership is currently a checkbox only. Gym choices and equipment
-suggestions will be added in the next stage.
+Gym suggestions are partial starting lists: equipment varies by location.
+The lists are stored in JavaScript and need no gym API or internet request.
+Their sources and limitations are recorded in [DECISION_LOG.md](./DECISION_LOG.md).
 
 The Generate workout button is intentionally disabled until JavaScript
 workout generation is added.
@@ -55,8 +76,8 @@ An internet connection will be needed when API integration is implemented.
 ## Project files
 
 - [index.html](./index.html) contains the commented page structure and form.
-- [styles.css](./styles.css) provides spacing and narrow-screen sizing for equipment controls.
-- [script.js](./script.js) manages equipment selections and the custom equipment field.
+- [styles.css](./styles.css) provides spacing and narrow-screen sizing for equipment and gym controls.
+- [script.js](./script.js) manages equipment selections, gym suggestions, and custom fields.
 - [README.md](./README.md) explains the project and how to open it.
 - [PROMPT_LOG.md](./PROMPT_LOG.md) records prompt summaries, corrections, approvals, and verified results.
 - [CODE_EXPLAINED.md](./CODE_EXPLAINED.md) explains how the current code works.

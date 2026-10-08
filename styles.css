@@ -1,6 +1,17 @@
-/* Let this group shrink to fit a narrow phone screen. */
-#equipment-options {
+/* Let both preference groups shrink to fit a narrow phone screen. */
+#equipment-options,
+#gym-membership {
   min-width: 0;
+}
+
+#equipment-options {
+  margin-top: 1rem;
+}
+
+/* Keep the two membership answers together with comfortable clickable labels. */
+.membership-option {
+  display: inline-block;
+  padding: 0.5rem 1rem 0.5rem 0;
 }
 
 /* Put each clickable checkbox label on its own comfortably spaced row. */
@@ -9,10 +20,16 @@
   padding: 0.5rem 0;
 }
 
-/* Keep the custom equipment field inside the form on small screens. */
-#other-equipment {
+/* Keep custom text fields inside the form on small screens. */
+#other-equipment,
+#other-gym-name {
   box-sizing: border-box;
   width: 100%;
   max-width: 24rem;
+  font: inherit;
+}
+
+#gym {
+  max-width: 100%;
   font: inherit;
 }
