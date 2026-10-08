@@ -15,6 +15,8 @@ empty workout results area, and exercise-data attribution.
   No is the default; membership is no longer an equipment checkbox.
 - The equipment `fieldset` groups related checkboxes. Its `legend` names
   the group, and each label makes its checkbox easier to identify and click.
+- Inside it, `details` and `summary` provide a native collapsible dropdown.
+  Omitting the `open` attribute makes it start closed; Enter/Space toggles it.
 - Checkboxes share `name="equipment"` because they belong to the same group.
   Unlike a dropdown, several of these boxes can be checked at once.
 - The Other Equipment text field starts hidden and disabled. `hidden`
@@ -40,7 +42,8 @@ The rest of the page keeps its existing appearance and browser focus indicators.
 1. If No Equipment was just checked, clear all other equipment boxes.
 2. Use `some()` to check whether any other box is checked. If none are,
    check No Equipment; otherwise, uncheck it. The `!` symbol means "not".
-3. Update gym and equipment visibility to match the membership answer and gym choice.
+3. Update the dropdown summary with one selected name or a selection count.
+4. Update gym and equipment visibility to match the membership answer and gym choice.
    Show and enable custom equipment text only when that choice is visible and checked.
 
 The function also runs once when the page opens to synchronize the controls.
@@ -58,7 +61,7 @@ of equipment values for each named gym. These are local suggestions and
 are not a live inventory of any location.
 
 `updateGymDetails` keeps the membership question visible and shows gym details
-only for Yes. It shows the shared equipment checklist for No, or for Yes after
+only for Yes. It shows the shared equipment selector for No, or for Yes after
 a gym is chosen. Hidden inputs are disabled to exclude inactive values from
 form data while preserving the user's entries for later.
 
@@ -77,3 +80,15 @@ included in form data. Changing gyms never automatically changes equipment.
 The user can adjust the equipment checkboxes whenever the checklist is shown.
 No Equipment only affects equipment checkboxes, so it never changes the
 separate Yes/No answer or hides an already selected gym.
+
+## Collapsing the equipment checklist
+
+Closing the dropdown only changes what is visible. Its checked inputs and
+active custom text still belong to the form; they are not disabled just
+because the dropdown is closed. The existing conditional rules still disable
+equipment when membership is Yes without a selected gym.
+
+The Escape key closes an open dropdown and moves focus to its summary.
+When the equipment section becomes inapplicable, JavaScript also closes the
+dropdown so it returns compactly when shown again. Adding gym suggestions
+updates the summary even when the dropdown stays closed.

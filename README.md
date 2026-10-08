@@ -43,12 +43,18 @@ then Available Equipment when applicable. The ten goals and three experience
 levels are unchanged. Height, weight, and BMI belong to a future stage.
 
 Answer **Do you have a gym membership?** with Yes or No. No is the default
-and immediately shows the existing equipment checklist. Yes reveals a gym
+and immediately shows the equipment selector. Yes reveals a gym
 dropdown: Planet Fitness, Crunch Fitness, LA Fitness, or Other Gym. The
-equipment checklist appears after you choose a gym.
+equipment selector appears after you choose a gym.
+
+Available Equipment starts collapsed. Click its header (or use Enter/Space)
+to open the existing multi-select checklist. The closed header shows the
+selected equipment name or a count. Click the header again or press Escape
+inside the dropdown to close it. Closing it preserves choices, custom text,
+and active equipment form data.
 
 A named gym shows a suggested equipment list. Use **Add suggested equipment**
-if it matches your location, then check or uncheck equipment below. Adding
+if it matches your location, then open Available Equipment to adjust the choices. Adding
 suggestions preserves existing choices. Changing gyms or switching Yes/No
 does not erase your equipment selections.
 

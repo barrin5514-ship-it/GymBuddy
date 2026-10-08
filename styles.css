@@ -8,6 +8,25 @@
   margin-top: 1rem;
 }
 
+/* A native disclosure keeps the existing checklist compact without a custom widget. */
+#equipment-dropdown {
+  max-width: 28rem;
+  border: 1px solid #aaa;
+  border-radius: 0.25rem;
+}
+
+#equipment-toggle {
+  padding: 0.75rem;
+  min-height: 44px;
+  box-sizing: border-box;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+#equipment-checklist {
+  padding: 0 0.75rem 0.5rem;
+}
+
 /* Keep the two membership answers together with comfortable clickable labels. */
 .membership-option {
   display: inline-block;

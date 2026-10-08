@@ -333,3 +333,64 @@ Approvals, completed work, and test results are recorded separately.
 - This approval does not authorize Stage 4 or workout generation. Stop after
   confirming the commit and Git status.
 - Push approval: Not granted. Do not push to GitHub.
+
+## 2026-10-08 — Stage 4 Part A: collapsible equipment selector
+
+- User request summary: Make equipment a compact, initially closed,
+  accessible multi-select dropdown with a selected-name/count summary.
+  Preserve all equipment, custom text, membership paths, and gym suggestions.
+  Test, document, show the diff, and stop for approval before committing.
+- Part B is a separate future commit for validated height/weight units and
+  local informational adult BMI. Do not start it until Part A is approved
+  and committed; do not add workout generation or push.
+- Verified HEAD was 71bab40, "Add gym membership preferences and equipment
+  suggestions", and the working tree was clean before changes.
+- Previewed the native details/summary approach and documentation changes.
+- Wrapped the existing equipment checklist in a details dropdown without
+  an open attribute. Kept all checkbox values and selection rules.
+- Added a summary showing one selected name or an item count, refreshed
+  after manual changes and the existing Add suggested equipment action.
+- Added Escape-to-close with focus returned to the summary. Native
+  Enter/Space toggling is retained. Membership hiding also closes the dropdown.
+- Closing the dropdown preserves selected equipment and active custom
+  text in form data; it does not disable them merely because they are collapsed.
+- Added scoped dropdown styling and updated form hints, README,
+  CODE_EXPLAINED, and DECISION_LOG for the new interaction.
+- Preview setup: Restarted the existing local-only server after confirming
+  it was stopped. Refreshed cached assets before testing the new dropdown.
+- All 52 equipment/gym checks passed: Closed default, summary names/counts,
+  every equipment choice, multiple selections, No Equipment exclusivity,
+  preserved custom text and form data, all gym presets, custom gym equipment,
+  and hiding/disabling equipment only when the membership path requires it.
+- All 47 keyboard/regression checks passed: Existing goals and experience,
+  Enter/Space toggling, Tab through open controls, skipping collapsed controls,
+  Escape from checkboxes/custom text with focus restoration, and gym navigation.
+- Test correction: The first layout check compared the rendered header
+  height against exactly 44 pixels. Browser scaling reported 43.998 pixels
+  despite a computed CSS minimum of 44. Corrected the test to allow half-pixel
+  geometry rounding while still checking the declared minimum. No CSS fix was needed.
+- All 18 final layout checks passed: Open and closed states for No membership,
+  a named gym, and Other Gym at 1280 by 800, 375 by 812, and 320 by 568.
+  Controls fit without horizontal overflow, and collapse substantially reduced height.
+- Monitored reload and interactions produced no console/page errors or failed
+  requests. The dropdown started closed on reload, responses were local, and
+  Generate workout remained disabled.
+- JavaScript syntax and Git whitespace checks passed. Reviewed the Part A
+  diff against 71bab40; existing equipment values and gym presets are retained.
+- No application defects were found during these checks. The only test
+  correction was the fractional-pixel tolerance described above.
+- Part A commit approval: Not granted. Await user review.
+- Part B, workout generation, and pushing have not begun.
+
+## 2026-10-08 — Stage 4 Part A handoff verification and approval
+
+- User explicitly approved committing Part A and pushing the reviewed local history to origin/main. This supersedes the earlier pending approval and no-push entries for this work.
+- Inspected the existing repository without discarding work: main at 71bab40, seven modified Part A files, no staged or untracked changes.
+- Used only per-command safe.directory for this exact repository. No global Git configuration, folder ownership, or permissions were changed.
+- Port 8765 had no listener. Restarting the local-only server restored HTTP 200 for index.html; no application fix was needed.
+- Independent Chromium verification passed 97 checks: default collapse, click/Enter/Space toggling, multi-selection, selected-name/count summary, collapsed form data and custom text, No Equipment exclusivity, every equipment option, all gym paths and suggestions, retained gym name, Escape focus restoration, Tab navigation, and regression controls.
+- Layout checks passed at 1280x800, 375x812, and 320x568 for No membership, Planet Fitness, and Other Gym, open and closed. No horizontal overflow; summary targets remain at least 44 CSS pixels within fractional rounding tolerance.
+- Browser verification reported zero page errors, console errors, or failed requests. JavaScript syntax and Git whitespace checks passed.
+- GitHub HTTPS connectivity and cached credential availability were verified without printing credentials. GitHub reports an empty branch list; both Git runtimes successfully returned no remote refs. No origin/main exists yet, so the approved push will establish it.
+- Reviewed all four existing outgoing commits plus the Part A diff. Files remain limited to the three app files and four documentation files; no potential secrets were found by inspection and pattern scanning.
+- Part B has not begun and will remain untouched for this task.

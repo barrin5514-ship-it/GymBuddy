@@ -70,3 +70,18 @@ informed by the following official descriptions; availability varies.
 - **Exclude hidden data.** Disable hidden gym inputs and the equipment fieldset
   while Yes has no gym selection. Retain values for switching back.
 - **Do not expand scope.** Height, weight, BMI, and generation remain future work.
+
+## 2026-10-08 — Stage 4 Part A: collapsible equipment
+
+- **Reuse the checklist inside native details/summary.** Start closed and
+  keep the existing checkboxes, custom text, and selection rules. Native
+  Enter/Space behavior avoids implementing a custom keyboard widget.
+- **Summarize active choices.** Show the single equipment name or a count;
+  refresh it for manual choices and the existing gym-suggestion Add action.
+- **Keep collapse separate from applicability.** Closing the dropdown must
+  not disable active equipment or remove it from form data. The membership
+  rules still hide and disable equipment until a gym is chosen when needed.
+- **Support Escape and narrow screens.** Escape closes and restores summary
+  focus. Scoped styling gives the header a 44-pixel minimum height and wraps text.
+- **Keep the requested commit boundary.** Part B measurements and BMI will
+  wait for approval and completion of the Part A commit. No generation logic.

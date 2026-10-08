@@ -1,5 +1,8 @@
 // Find the equipment controls once so the rest of the code can use clear names.
 const equipmentGroup = document.querySelector("#equipment-options");
+const equipmentDropdown = document.querySelector("#equipment-dropdown");
+const equipmentToggle = document.querySelector("#equipment-toggle");
+const equipmentSummary = document.querySelector("#equipment-summary");
 const equipmentCheckboxes = equipmentGroup.querySelectorAll('input[name="equipment"]');
 const noEquipment = document.querySelector("#equipment-none");
 const otherEquipment = document.querySelector("#equipment-other");
@@ -42,6 +45,12 @@ function updateEquipmentSelection(changedCheckbox) {
   });
   noEquipment.checked = !hasEquipment;
 
+  // Keep the closed dropdown useful: show a single choice or the selected count.
+  const selectedEquipment = Array.from(equipmentCheckboxes).filter((checkbox) => checkbox.checked);
+  equipmentSummary.textContent = selectedEquipment.length === 1
+    ? selectedEquipment[0].labels[0].textContent.trim()
+    : selectedEquipment.length + " items selected";
+
   updateGymDetails();
 }
 
@@ -55,6 +64,9 @@ function updateGymDetails() {
   const showEquipment = !hasMembership || gymSelect.value !== "";
   equipmentGroup.hidden = !showEquipment;
   equipmentGroup.disabled = !showEquipment;
+  if (!showEquipment) {
+    equipmentDropdown.open = false;
+  }
   otherEquipmentDetails.hidden = !showEquipment || !otherEquipment.checked;
   otherEquipmentInput.disabled = !showEquipment || !otherEquipment.checked;
 
@@ -93,6 +105,15 @@ gymMembershipChoices.forEach((choice) => {
 });
 gymSelect.addEventListener("change", updateGymDetails);
 
+// Native summary handles Enter and Space; Escape also closes and restores focus.
+equipmentDropdown.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && equipmentDropdown.open) {
+    equipmentDropdown.open = false;
+    equipmentToggle.focus();
+    event.preventDefault();
+  }
+});
+
 addGymEquipment.addEventListener("click", () => {
   const suggestions = gymEquipmentSuggestions[gymSelect.value] || [];
   // Add suggestions without removing equipment the user has already selected.
@@ -102,7 +123,7 @@ addGymEquipment.addEventListener("click", () => {
     }
   });
   updateEquipmentSelection();
-  gymStatus.textContent = "Suggested equipment added. Adjust the equipment checkboxes below to match your gym.";
+  gymStatus.textContent = "Suggested equipment added. Open Available Equipment below to review or adjust your choices.";
 });
 
 // Synchronize the controls when the page first opens, including restored selections.
