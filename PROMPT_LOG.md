@@ -477,3 +477,96 @@ Approvals, completed work, and test results are recorded separately.
 - This approval supersedes the pending-approval/no-push entries for Part B.
 - Authorized commit message: Refine BMI interface and height controls.
 - Workout generation remains outside this approval and has not begun.
+
+
+## 2026-10-08 — Stage 5A API integration and review
+
+- User requested three separately approved checkpoints: 5A real ExerciseDB
+  connection/display/errors; 5B Quick Workout; 5C weekly plans. Start 5A only.
+- Confirmed clean main at aa136a8cf1fbf4c62d4fe292f8d2b63c79ba2eb8.
+- Verified public endpoint, CORS, schema, names/equipment/muscles/instructions,
+  default ten records, reported total 1500, 25-record cap, and official OpenAPI.
+  Confirmed after=nextCursor advances results; cursor was ignored. Verified a
+  real no-match response returned success=true, data=[], total=0.
+- Added a collapsed exercise library with optional name search, explicit Load,
+  First/Next pages, genuine provider fields/instructions, missing-field labels,
+  and compact native exercise disclosures. New exercise-api.js isolates this
+  integration; existing script.js is unchanged.
+- Added ten-second timeout, overlap prevention, accessible loading/busy status,
+  offline/HTTP/rate-limit/parse errors, retry, and previous-page preservation.
+  No production fallback/mock records, API key, GIF fetches, storage, BMI data,
+  recommendation logic, Quick mode, or weekly generation.
+- The first live browser attempt timed out. A follow-up browser request and
+  full live test succeeded; no credential/network/security settings were changed.
+  Live test confirmed HTTP 200, ten displayed records, correct provider names,
+  instructions, Next advancing IDs, First restoring the first page, and zero
+  console/page errors. Data was captured only outside the project for tests.
+- Controlled API suite passed 89 checks using this genuine captured response
+  with explicit test-only mutations/failures. Covered loading, no overlaps,
+  names/equipment/muscles/instructions, correct cursor/query encoding, search
+  pagination, HTTP 500/429/403, invalid JSON/shape/success flag, offline errors,
+  retry, empty results, duplicate/malformed records, missing fields/meta/cursor,
+  plain-text HTML injection prevention, timeout/recovery, no form/credential/
+  referrer leakage, and desktop/mobile layouts. No uncaught page errors.
+- Test correction: missing-field text was inside a collapsed exercise disclosure.
+  Opened it before reading visible text; no production code fix was needed.
+- All 228 compact BMI checks and 97 earlier regression checks passed unchanged.
+  BMI suite reported zero external requests and browser errors; library fetches
+  only when explicitly requested. Layouts checked at 1280x800, 375x812, 320x568.
+- Updated the four existing documentation files. 5A awaits user review;
+  no commit/push and no checkpoint 5B or 5C work performed.
+
+## 2026-10-08 — Resolve 5A verification blockers and finalize approved work
+
+- User approved the existing 5A integration subject to successful verification,
+  authorized formatting fixes, connectivity diagnosis, regression testing, and
+  commit/push with message "Add ExerciseDB exercise library integration".
+  Stop for any unresolved required check; do not begin 5B.
+- Formatting diagnosis: Normal git diff --check already passed with the
+  repository's core.autocrlf=true setting. My earlier command overrode that
+  setting to false and flagged carriage returns at lines 396 and 479. These
+  two lines used CRLF amid LF lines; their text had no trailing spaces.
+- Normalized only those two line endings to LF, preserving prompt history.
+  Both the normal and raw-line-ending whitespace checks then passed. No
+  repository or global Git configuration was changed.
+- Connectivity diagnosis: DNS resolved IPv4/IPv6 addresses. Sandboxed curl
+  failed before HTTP with Windows Schannel SEC_E_NO_CREDENTIALS. The same
+  approved request outside the sandbox returned API HTTP 200 with TLS
+  verification passing. The OpenAPI endpoint also returned valid 3.1.0 JSON,
+  confirming limit/name/after and the existing endpoint. This identifies a
+  sandbox TLS-context failure, not evidence of an API, DNS, or certificate outage.
+  The earlier web-tool network failure was bypassed by verified authorized
+  shell/browser access, without disabling TLS or changing security settings.
+- Newly run LIVE browser verification passed 15 checks: HTTP 200, ten genuine
+  records, exact provider names/instructions, Next cursor advancement, First
+  page restoration, live name search, and only allowed query parameters with
+  no credentials, referrer, or request body. The API reported 1,500 records.
+- Newly run CONTROLLED tests passed 24 checks using a response captured from
+  that live run. Explicit test-only mutations/interceptions covered search
+  encoding, loaded-search pagination, loading/no overlaps, HTTP 500/429/403,
+  malformed JSON/shape, offline failure, missing fields/cursors, duplicates,
+  plain-text rendering, empty results, retry, and the actual ten-second timeout.
+  Expected simulated failures generated network-console messages, but no
+  uncaught application errors. Interception was removed after the tests.
+- Newly run existing-feature regressions passed 44 BMI checks and 40
+  goal/experience/equipment/gym/keyboard checks. Covered known metric/imperial
+  results, adult category boundaries, invalid/missing values, pediatric age
+  behavior, conversion round trips, custom fields, and equipment exclusivity.
+  Those interactions made no external requests; script.js remains unchanged.
+- Six new desktop/mobile checks passed at 1280x800, 375x812, and 320x568
+  for metric and imperial controls with expanded library/equipment content.
+  A final genuine HTTP 200 Enter-search test passed with measurements filled;
+  only limit=10 was sent. No normal-run console/page errors or failed requests.
+- Earlier logged counts of 89 API, 228 BMI, and 97 regression checks belong
+  to the previous session. They are not the newly run suites described above.
+- Test-harness corrections: An initial unguarded library toggle left its Load
+  button hidden; the test now checks/open the disclosure explicitly. A URL
+  parser was unavailable in the Playwright host context, so query inspection
+  was moved into the browser context. Neither required an application change.
+- Reviewed every changed/new file and checked for credential patterns. No
+  unrelated changes or obvious credentials were found. Both scripts passed
+  syntax checks; the feature remains browsing only, with Generate disabled.
+- Fetched origin using a temporary repository-specific safe.directory option.
+  Before the new commit, local main and origin/main both pointed to aa136a8.
+- All required checks passed. Proceed with the user's approved 5A commit and
+  non-force push, then verify matching refs and a clean working tree.

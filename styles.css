@@ -78,3 +78,13 @@
   #height-imperial select { width: 4.5rem; }
   #height-imperial { gap: 0.35rem; }
 }
+
+/* API browsing stays collapsed and uses native, compact disclosures. */
+#exercise-library { margin-top: 1rem; max-width: 40rem; }
+#exercise-library summary { min-height: 44px; box-sizing: border-box; padding: 0.65rem 0; cursor: pointer; overflow-wrap: anywhere; }
+#exercise-library p { margin: 0.35rem 0; }
+.exercise-search, .exercise-page-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+#exercise-search { box-sizing: border-box; width: 12rem; max-width: 100%; min-height: 44px; font: inherit; }
+#exercise-library button { min-height: 44px; max-width: 100%; font: inherit; padding: 0.4rem 0.65rem; }
+#exercise-list details { border-top: 1px solid #ddd; overflow-wrap: anywhere; }
+#exercise-list ol { padding-left: 1.5rem; }

@@ -1,7 +1,7 @@
 # GymBuddy Code Explained
 
-This guide describes the preference form, measurements, and local informational
-BMI. Workout generation is not implemented yet.
+This guide describes the preference form, local informational BMI, and the
+opt-in ExerciseDB library. Workout generation is not implemented yet.
 
 ## HTML: the page and its controls
 
@@ -137,3 +137,36 @@ Scoped spacing removes the old large measurement border and separate BMI panel.
 Feet/inches remain side by side on mobile, with 44px control heights. Weight
 input sizes and behavior are retained. The section makes no network requests,
 stores no age/measurements, and does not affect workout generation or equipment.
+
+
+## ExerciseDB browsing: exercise-api.js
+
+This separate deferred script preserves script.js and the BMI interface.
+The outer details disclosure starts closed and does not automatically fetch.
+Clicking Load exercises or pressing Enter in the search input starts a request.
+The button type is button, so browsing never submits the preference form.
+
+loadExercisePage builds a fixed HTTPS endpoint URL with URLSearchParams.
+It sends limit=10, an optional name, and an optional after cursor. fetch uses
+credentials=omit and no-referrer, with an AbortController cancelled after ten
+seconds. Only these browsing parameters leave the browser; no form data or BMI.
+await waits for the response/body. try/catch converts failures into readable
+status messages; finally always clears the timeout and restores button states.
+
+The function validates success and the data array before rendering. Invalid
+responses and failed requests preserve old results. A successful empty result
+clears the page. Missing metadata is safe: it does not assume more pages exist.
+Next uses the verified meta.nextCursor as the request's after parameter; First
+page removes after. Navigation uses the last loaded search, even if text edits
+have not yet been loaded. Buttons are disabled while busy to prevent overlaps.
+
+renderExercisePage builds native closed details for each genuine exercise ID.
+It skips missing IDs and duplicate IDs. exerciseTextList filters arrays to real
+nonempty strings. Missing names/equipment/muscles/instructions use explicit
+provider-missing labels rather than fabricated data. textContent safely inserts
+provider strings; no innerHTML or remote script/image is used. The result region
+uses aria-busy and its short status uses role=status. Styling is confined to the
+library and preserves 44px controls, wrapping search tools, and narrow layouts.
+
+No goal/equipment/difficulty matching, sets/reps/rest prescriptions, Quick mode,
+weekly mode, or persistent plans are implemented here. Those are later checkpoints.

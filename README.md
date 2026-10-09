@@ -76,8 +76,8 @@ Their sources and limitations are recorded in [DECISION_LOG.md](./DECISION_LOG.m
 The Generate workout button is intentionally disabled until JavaScript
 workout generation is added.
 
-The current page does not fetch exercises or display workout cards.
-An internet connection will be needed when API integration is implemented.
+The opt-in Exercise library now fetches real exercise data. An internet
+connection is required for browsing; workout generation remains disabled.
 
 ## Estimated BMI
 
@@ -130,21 +130,58 @@ and [CDC guidance below age 2](https://www.cdc.gov/growth-chart-training/hcp/usi
 - [index.html](./index.html) contains the commented page structure and form.
 - [styles.css](./styles.css) provides spacing and narrow-screen sizing for equipment, gym, and measurement controls.
 - [script.js](./script.js) manages equipment, gyms, measurement validation, unit conversions, and local BMI.
+- [exercise-api.js](./exercise-api.js) loads and displays real ExerciseDB records with guarded pagination and errors.
 - [README.md](./README.md) explains the project and how to open it.
 - [PROMPT_LOG.md](./PROMPT_LOG.md) records prompt summaries, corrections, approvals, and verified results.
 - [CODE_EXPLAINED.md](./CODE_EXPLAINED.md) explains how the current code works.
 - [DECISION_LOG.md](./DECISION_LOG.md) records implementation decisions and their reasons.
 
-## Exercise data
+## ExerciseDB integration — checkpoint 5A
 
-Exercise data will come from [AscendAPI / ExerciseDB](https://ascendapi.com).
-The public endpoint is https://oss.exercisedb.dev/api/v1/exercises.
-See the [API documentation](https://oss.exercisedb.dev/docs).
+Open the collapsed **Exercise library**, optionally enter an exercise name,
+and choose **Load exercises** (or Enter in the search field). Open an exercise
+name for equipment, body parts, target/secondary muscles, and instructions.
+Use **Next page** or **First page** to browse; changing the search term requires
+a new load. Pagination stays attached to the last loaded search.
 
-The API supplies names, instructions, equipment labels, and demonstration
-GIF URLs. It does not supply goal, difficulty, sets, or reps fields.
-We will explain our workout rules when we implement them. An exercise
-labeled bodyweight can still need equipment, so matching needs care.
+These records are browsing data, not exercise recommendations. They are not
+matched to available equipment or experience yet. Do not assume a bodyweight
+label means no support equipment: API instructions can require benches, bars,
+or other supports. Quick Workout matching/generation belongs to checkpoint 5B;
+weekly plans and per-day regeneration belong to 5C. Both await separate approval.
+
+Verified live on 2026-10-08:
+- Endpoint: [public exercises API](https://oss.exercisedb.dev/api/v1/exercises),
+  HTTP 200 without a key, browser CORS allowed.
+- Response: success, meta, data; 1,500 records reported at verification time.
+- Default page size 10; limit accepts up to 25 (larger requested limits return 25).
+- Forward pagination sends after=meta.nextCursor. A cursor parameter is ignored.
+- Records have exerciseId, name, equipments, bodyParts, targetMuscles,
+  secondaryMuscles, instructions arrays, and gifUrl. No difficulty, goal,
+  sets, reps, or rest fields were present in the live records/schema.
+- Official [API docs](https://oss.exercisedb.dev/docs) and
+  [live OpenAPI schema](https://oss.exercisedb.dev/swagger) were checked.
+
+GymBuddy requests only ten records at a time and never downloads the entire
+catalog automatically. Loading disables request buttons and announces status.
+Empty search results, missing fields, unusable/duplicate records, invalid JSON,
+HTTP errors, offline/CORS failures, and a ten-second timeout get useful messages.
+Retry uses Load exercises. A failed request retains the previously loaded page;
+an actual empty result clears it. Missing fields say they were not supplied.
+Missing pagination metadata disables Next rather than inventing a cursor.
+
+Only limit, optional exercise name, and optional after cursor go to ExerciseDB.
+No height, weight, age, BMI, goal, gym, equipment choices, cookies, credentials,
+or page referrer are sent. There are no API keys, server proxy, stored exercise
+cache, or fabricated production fallback records. Provider text is rendered as
+plain text. GIFs are not loaded in this checkpoint; textual instructions are
+available. API availability and data quality can vary.
+
+Verification: 89 controlled API checks using a genuine captured response plus
+explicit failure injection; live HTTP 200 display/next/first-page browser test;
+228 BMI and 97 existing-feature regression checks. Desktop/mobile checked at
+1280x800, 375x812, 320x568. Failure injections intentionally simulate service
+errors; they are confined to test scripts outside this repository.
 
 ## Development process
 

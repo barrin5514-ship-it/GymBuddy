@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="styles.css">
   <!-- defer waits until the HTML is ready before running our form interactions. -->
   <script src="script.js" defer></script>
+  <script src="exercise-api.js" defer></script>
 </head>
 <body>
   <!-- The header introduces the app before the main page content. -->
@@ -225,6 +226,23 @@
       <button type="submit" disabled aria-describedby="builder-status">Generate workout</button>
       <p id="builder-status">Workout generation is coming in a later development step.</p>
     </form>
+
+    <!-- Fetch only when requested. This library is browsing, not a generated workout. -->
+    <details id="exercise-library">
+      <summary>Exercise library</summary>
+      <p>Browse real ExerciseDB data. These exercises are not matched to your equipment or experience yet; this is not a workout recommendation.</p>
+      <div class="exercise-search">
+        <label for="exercise-search">Exercise name (optional)</label>
+        <input type="search" id="exercise-search" maxlength="100" placeholder="e.g., squat">
+        <button type="button" id="load-exercises">Load exercises</button>
+      </div>
+      <p id="exercise-status" role="status" aria-live="polite" aria-atomic="true">Load exercises to connect to ExerciseDB.</p>
+      <div id="exercise-list" aria-busy="false"></div>
+      <div class="exercise-page-controls">
+        <button type="button" id="first-exercises" disabled>First page</button>
+        <button type="button" id="next-exercises" disabled>Next page</button>
+      </div>
+    </details>
 
     <!-- aria-labelledby names this section for assistive tools such as screen readers. -->
     <section aria-labelledby="workout-heading">

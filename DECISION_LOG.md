@@ -147,3 +147,36 @@ These decisions supersede the initial Part B interface decisions above.
   reviewed 2026-10-08.
 - No commit or push until user approval. Suggested message remains
   "Refine BMI interface and height controls".
+
+
+## 2026-10-08 — Stage 5 checkpoint 5A: genuine API browsing only
+
+- **Respect checkpoint boundaries.** Add opt-in real exercise browsing and
+  failure handling only. Keep Generate workout disabled; no Quick/Weekly modes,
+  matching, prescriptions, or plan state until their own approvals.
+- **Verify before assuming.** Live endpoint returned HTTP 200 with CORS *,
+  ten default records and total 1500. limit=100/101 returned 25. OpenAPI confirms
+  min 1/max 25. Verified after pagination advances IDs; cursor was ignored.
+  A nonsense name produced a genuine empty data array with total zero.
+- **Use the observed schema.** Read plural equipments, bodyParts, targetMuscles,
+  secondaryMuscles, and instructions arrays, plus stable exerciseId and name.
+  Difficulty, sets/reps/rest, and goals are absent; no difficulty matching claims.
+- **Separate API browsing from recommendations.** Label records unfiltered for
+  equipment/experience; bodyweight instructions can require extra supports.
+  Future 5B matching must inspect names/instructions as well as equipment labels.
+- **Keep compact and bounded.** Closed library, ten records per explicit load,
+  individually collapsed details, First/Next pagination. No full-catalog fetch,
+  auto network request, GIF downloads, or oversized permanent cards.
+- **Handle service failures.** Ten-second AbortController timeout, request guard,
+  loading/busy status, useful HTTP/network/parse messages, retry controls. Retain
+  a prior page on failure; clear it for genuine empty results. Missing metadata
+  cannot fabricate a next page. Missing or malformed fields are labeled/skipped.
+- **Keep user data private.** Fixed public HTTPS endpoint and only browsing query
+  parameters; credentials omitted and referrer suppressed. No API key, BMI/age,
+  gym/preferences, storage, proxy, or production mock data. Use safe textContent.
+- **Preserve existing code.** script.js remains byte-for-byte unchanged; all
+  existing preference and compact BMI behavior passes its regression suites.
+- Sources: [live endpoint](https://oss.exercisedb.dev/api/v1/exercises),
+  [official docs](https://oss.exercisedb.dev/docs),
+  [OpenAPI](https://oss.exercisedb.dev/swagger), checked 2026-10-08.
+- Await user approval before a 5A commit/push or beginning 5B.
