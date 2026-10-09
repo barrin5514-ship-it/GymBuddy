@@ -9,20 +9,29 @@
   <!-- defer waits until the HTML is ready before running our form interactions. -->
   <script src="script.js" defer></script>
   <script src="exercise-api.js" defer></script>
+  <script src="workout-engine.js" defer></script>
+  <script src="stretching.js" defer></script>
+  <script src="exercise-media.js" defer></script>
+  <script src="workout-ui.js" defer></script>
 </head>
 <body>
-  <!-- The header introduces the app before the main page content. -->
-  <header>
-    <h1>GymBuddy</h1>
-    <p>A simple place to start your next workout.</p>
+  <a class="skip-link" href="#workout-builder">Skip to workout builder</a>
+  <nav aria-label="Main navigation"><a class="brand" href="#">GYM<span>BUDDY</span><span class="brand-dot">.</span></a><div><a href="#workout-builder">Workout Builder</a><a href="#meal-plans">Meal Plans</a></div></nav>
+  <header class="hero">
+    <div class="hero-copy"><p class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p>
+      <h1>Show up.<br><span>Get stronger.</span></h1>
+      <p>Training that fits your goals, your equipment, and your life. Build a workout worth showing up for.</p>
+      <a class="cta" href="#workout-builder">Build my workout <span aria-hidden="true">↗</span></a>
+      <div class="hero-tags"><span>YOUR GOALS</span><span>YOUR PACE</span><span>YOUR PROGRESS</span></div>
+    </div>
+    <p class="photo-caption">MAKE YOUR NEXT REP COUNT.</p>
   </header>
-
   <!-- This main area starts the Workout Builder. Other app areas will come later. -->
   <main id="workout-builder">
-    <h2>Choose your workout preferences</h2>
+    <div class="section-heading"><p class="eyebrow">01 / MAKE IT PERSONAL</p><h2>Your training. Your way.</h2><p>A few details. A plan that fits. Your profile stays in this browser.</p></div>
 
     <!-- An id gives JavaScript a way to find an element when we add behavior later. -->
-    <form id="workout-form">
+    <form id="workout-form" novalidate>
       <!-- Each label's for value matches a control's id, connecting its name to the control. -->
       <p>
         <label for="goal">Fitness goal</label>
@@ -51,6 +60,20 @@
         </select>
       </p>
 
+      <div class="preference-grid">
+        <p><label for="workout-age">Your age (years)</label><input id="workout-age" name="workout-age" type="number" min="1" max="120" step="1" required placeholder="Enter age" aria-describedby="workout-age-help"><small id="workout-age-help">Used with experience and limitations. BMI does not determine your workout.</small></p>
+        <p><label for="workout-style">Workout style (optional)</label><select id="workout-style" name="workout-style">
+          <option value="auto">Auto — Choose for Me</option><option value="hiit">HIIT</option><option value="strength">Traditional Strength Training</option><option value="hypertrophy">Hypertrophy</option><option value="circuit">Circuit Training</option><option value="calisthenics">Calisthenics</option><option value="isometric">Isometric Training</option><option value="plyometrics">Plyometrics</option><option value="supersets">Supersets</option><option value="mobility">Mobility &amp; Flexibility</option>
+        </select></p>
+        <p><label for="stretching-preference">Stretching Preference</label><select id="stretching-preference"><option value="solo">Solo Stretching</option><option value="partner">Partner-Assisted Stretching</option><option value="both">Both</option></select></p>
+        <p><label for="duration">Session window</label><select id="duration"><option value="30" selected>30 Minutes</option><option value="45">45 Minutes</option><option value="60">1 Hour+</option></select></p>
+        <p><label for="plan-mode">Plan type</label><select id="plan-mode"><option value="quick">Quick Workout</option><option value="weekly">Weekly Plan</option></select></p>
+      </div>
+      <label id="supervision-label" class="notice" hidden><input type="checkbox" id="supervision"> A parent, guardian, or qualified instructor will supervise.</label>
+      <fieldset id="weekly-days" hidden><legend>Your training days</legend><div class="day-choices">
+<label><input type="checkbox" name="training-day" value="0" checked>Mon</label><label><input type="checkbox" name="training-day" value="1" >Tue</label><label><input type="checkbox" name="training-day" value="2" checked>Wed</label><label><input type="checkbox" name="training-day" value="3" >Thu</label><label><input type="checkbox" name="training-day" value="4" checked>Fri</label><label><input type="checkbox" name="training-day" value="5" >Sat</label><label><input type="checkbox" name="training-day" value="6" >Sun</label></div><small>Adjacent training days include recovery sessions. Unselected days remain rest days.</small></fieldset>
+      <fieldset><legend>Movement preferences &amp; limitations</legend><details id="limitations-dropdown"><summary id="limitations-toggle"><span id="limitations-summary">No limitations selected</span></summary><p>Choose any movements you need to avoid. These filters do not assess an injury or guarantee suitability.</p><div class="limitation-grid">
+<label><input type="checkbox" name="limitation" value="low-impact">Low impact / no jumping</label><label><input type="checkbox" name="limitation" value="knee">Avoid knee-loading movements</label><label><input type="checkbox" name="limitation" value="back">Avoid back-loading / twisting</label><label><input type="checkbox" name="limitation" value="shoulder">Avoid shoulder-loading movements</label><label><input type="checkbox" name="limitation" value="wrist">Avoid wrist-loading movements</label><label><input type="checkbox" name="limitation" value="balance">Avoid balance-demanding movements</label><label><input type="checkbox" name="limitation" value="other">Other limitation or injury</label></div></details><p><label for="exercise-exclusions">Exercises you prefer to skip (optional)</label><input id="exercise-exclusions" maxlength="200" placeholder="e.g., lunges, crunches"><small>Comma-separated exercise names or words. Use the limitation controls for physical restrictions.</small></p></fieldset>
       <!-- Radio buttons with the same name allow only one membership answer. -->
       <fieldset id="gym-membership">
         <legend>Gym Membership</legend>
@@ -158,12 +181,15 @@
               <p>
                 <input type="text" id="other-equipment" name="other-equipment"
                   placeholder="e.g., medicine ball, cable machine" disabled>
+              <small>Supported: cable machine, smith machine, leverage machine, stability ball, medicine ball, ez barbell, trap bar, squat rack. Separate with commas.</small>
               </p>
             </div>
           </div>
         </details>
       </fieldset>
 
+      <details class="cardio-details"><summary>Confirm specific cardio equipment (optional)</summary><p>Used only when Cardio Equipment is selected above.</p><label><input type="checkbox" name="cardio-type" value="treadmill"> Treadmill</label> <label><input type="checkbox" name="cardio-type" value="stationary bike"> Stationary bike</label> <label><input type="checkbox" name="cardio-type" value="elliptical"> Elliptical</label></details>
+      <details class="bmi-disclosure"><summary>Optional BMI calculator</summary>
       <!-- One compact BMI group; calculation and measurements stay in this browser. -->
       <fieldset id="bmi-section" aria-describedby="bmi-help">
         <legend>Estimated BMI</legend>
@@ -222,34 +248,17 @@
         <small>Input range: height 50–300 cm; weight 10–700 kg (about 22–1543 lb). Adult categories use unrounded BMI.</small>
       </fieldset>
 
-      <!-- Keep this disabled until JavaScript can generate a workout. -->
-      <button type="submit" disabled aria-describedby="builder-status">Generate workout</button>
-      <p id="builder-status">Workout generation is coming in a later development step.</p>
+      </details>
+      <div class="generate-area"><button type="submit" id="generate-workout">Generate Workout <span aria-hidden="true">↗</span></button><p id="builder-status" role="status" aria-live="polite">Ready when you are. Choose your preferences to get started.</p></div>
     </form>
-
-    <!-- Fetch only when requested. This library is browsing, not a generated workout. -->
-    <details id="exercise-library">
-      <summary>Exercise library</summary>
-      <p>Browse real ExerciseDB data. These exercises are not matched to your equipment or experience yet; this is not a workout recommendation.</p>
-      <div class="exercise-search">
-        <label for="exercise-search">Exercise name (optional)</label>
-        <input type="search" id="exercise-search" maxlength="100" placeholder="e.g., squat">
-        <button type="button" id="load-exercises">Load exercises</button>
-      </div>
-      <p id="exercise-status" role="status" aria-live="polite" aria-atomic="true">Load exercises to connect to ExerciseDB.</p>
-      <div id="exercise-list" aria-busy="false"></div>
-      <div class="exercise-page-controls">
-        <button type="button" id="first-exercises" disabled>First page</button>
-        <button type="button" id="next-exercises" disabled>Next page</button>
-      </div>
-    </details>
 
     <!-- aria-labelledby names this section for assistive tools such as screen readers. -->
     <section aria-labelledby="workout-heading">
-      <h2 id="workout-heading">Your workout</h2>
+      <p class="eyebrow">02 / PUT YOUR PLAN IN MOTION</p><h2 id="workout-heading" tabindex="-1">Your workout</h2><p id="profile-changed" class="notice" hidden>Preferences changed. Generate a new plan to apply them; the plan below uses your previous preferences.</p>
       <!-- JavaScript will place exercise cards inside this results area later. -->
-      <div id="workout-results"></div>
+      <div id="workout-results" aria-busy="false"><div class="empty-state"><span aria-hidden="true">↗</span><h3>A stronger routine starts here.</h3><p>Your exercises, sets, and recovery will appear here.</p></div></div>
     </section>
+    <section id="meal-plans" class="coming-soon"><span class="badge">UP NEXT</span><h2>Meal Plans — Coming Soon.</h2><p>More support for your next chapter.</p></section>
   </main>
 
   <!-- Credit the provider whose exercise data we will use. -->
@@ -257,6 +266,7 @@
     <p>Exercise data provided by
       <a href="https://ascendapi.com">AscendAPI / ExerciseDB</a>.
     </p>
+    <p>Photo: <a href="https://www.pexels.com/photo/person-holding-barbell-841128/">Victor Freitas / Pexels</a>. <a href="https://www.pexels.com/license/">Photo license</a>.</p>
   </footer>
 </body>
 </html>

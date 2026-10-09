@@ -1,3 +1,66 @@
+# Presentation implementation — October 8, 2026
+
+This is the current implementation status. The earlier checkpoint notes below are retained as history and no longer describe the current UI.
+
+GymBuddy remains HTML, CSS, and vanilla JavaScript. The original `script.js` equipment controls, gym suggestions, and BMI calculator are preserved unchanged. Generation now uses the existing ExerciseDB endpoint behind the scenes; the public exercise library has been removed.
+
+## Run
+
+From the GymBuddy directory: `py -m http.server 8765 --bind 127.0.0.1`, then open http://127.0.0.1:8765. Internet access and an available ExerciseDB service are needed for adult/teen exercise generation. No API key, framework, build step, or meal API is required.
+
+## Implemented
+
+- Quick Workout and seven-day Weekly Plan with selected training days, recovery between hard sessions, and rest on unselected days. Sunday/Monday adjacency is also considered.
+- Regenerate an individual workout day; replace an individual exercise with a same-target alternative while preserving the rest of the plan. If no alternative is available, the existing workout remains intact.
+- Auto plus HIIT, strength, hypertrophy, circuit, calisthenics, isometric, plyometrics, supersets, and mobility. Styles change filters, prioritization, repetitions/holds, set counts, rest, and sequence instructions. Supersets label pairs A1/A2 and B1/B2. Duration is a flexible session window, not a precise timer.
+- Age, experience, goal, confirmed equipment, gym choices, structured physical limitations, and exercise exclusions. Gym membership alone does not add equipment. Unsupported custom equipment gets an explicit validation message.
+- Under 13: supervised activity guidance without adult exercise prescriptions or API calls. Ages 13–17: supervised technique-oriented bodyweight work; no maximal-load or calorie-target prescription. Adult ability is not inferred solely from age. Unlisted injuries/limitations block automatic matching rather than guessing.
+- Original adult/pediatric BMI calculations and unit conversions remain separate from programming. BMI is not used to select workouts. The workout age is separate from the optional calculator's age category.
+- Locally saved real photograph, dark overlay, electric blue accents, responsive cards, accessible controls and status messages. See `assets/PHOTO-LICENSE.md`. The pre-existing `assets/gym-hero.webp` was retained unchanged.
+- Meal Plans — Coming Soon.
+
+## Data and failure behavior
+
+`exercise-api.js` validates genuine provider records and queries at most two pages per search term, paced 1.2 seconds apart. Successful searches are cached only in memory. Only exercise names, page size, and cursors are transmitted; no user profile, BMI, measurements, cookies, or referrer. An initial workout can take several seconds. Cache reuse speeds later generations. The API does not supply sets/reps/rest or difficulty; GymBuddy adds conservative programming rules and identifies them as suggestions. Filtering is not medical screening and cannot guarantee suitability.
+
+Malformed records are skipped; incomplete pools, empty responses, unsupported equipment, rate limits, timeouts, and network errors produce readable messages. Failure preserves an existing plan. Profile changes mark the old plan as stale and disable its edit controls until regeneration. No fabricated exercise records or production fallback dataset are included.
+
+**Current live status:** Browser verification now passes for Quick Workout, Weekly Plan, same-target replacement, and equipment matching. The October 9 run made 13 real API requests, all HTTP 200, receiving 294 records. The earlier 1015/1102 errors were upstream rate/resource failures; DNS, endpoint shape, and CORS work in the current run. Requests honor Retry-After and preserve successful session cache entries during cooldown. No paid API or fabricated fallback was introduced.
+
+**Final MVP improvements:** Session Window is exactly 30 Minutes, 45 Minutes, or 1 Hour+. Exercise counts/sets and warm-up/cooldown scale with duration; each workout displays an estimated timing breakdown and explicitly includes easy movement to complete the selected window without inflating hard exercise volume. Teen and high-intensity volume caps remain. A shorter matched exercise pool can increase the easy portion. Time is an estimate, and skipping a block shortens the session.
+
+Movement limitations now use a collapsed native multi-select disclosure with a selection summary, keyboard operation, Escape-to-close, and persistent checked options. The exercise-exclusion text field remains separate. Exact-ID ExerciseDB GIFs are lazily loaded from the validated provider media host; missing, mismatched, or broken media falls back to text. Existing instructions remain visible in their disclosure. A dedicated October 9 live-media check loaded two GIFs; a third record had no usable media and showed the fallback.
+
+## Completion additions — October 9, 2026
+
+Session uniqueness uses provider IDs and normalized names; similar movement
+patterns are limited while advanced hypertrophy/supersets may retain variations
+with distinct target muscles. Replacement applies the same identity checks.
+Media outcomes are shared only for the same provider ID, including failures.
+
+Warm-up and cooldown sections contain actual movements and How to Perform
+instructions, with their blocks included in session timing. Stretching Preference
+defaults to Solo; Partner-Assisted and Both are optional. Partner guidance requires
+consent, communication, user-controlled range, no forced joints, and stopping for
+pain. Clearly labeled GymBuddy guides supplement genuine provider stretches;
+local guides have no invented ExerciseDB IDs or demonstrations. Conservative
+filters may leave no matching stretch; the interface explains that limitation.
+
+Stretching references: [Mayo Clinic stretching guidance](https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20047931?p=1).
+
+## Verification
+
+See `VERIFICATION.md` for release preflight, historical results, documented limitations, and reproducible test commands.
+
+## Programming references
+
+Youth activity context: https://www.cdc.gov/physical-activity-basics/guidelines/children.html and https://www.cdc.gov/physical-activity-basics/adding-children-adolescents/what-counts.html. The under-13 activity-only boundary and the strict teen filters are conservative product choices, not a clinical assessment or a universal age cutoff for supervised resistance training.
+
+---
+
+# Historical checkpoint documentation
+
+
 # GymBuddy
 
 Version 0.1 — workout preferences foundation.

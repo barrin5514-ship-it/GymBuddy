@@ -1,0 +1,16 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright'),fs=require('fs'),assert=require('assert');
+const fixture=JSON.parse(fs.readFileSync(process.env.GYMBUDDY_LIMITATION_FIXTURE));
+(async()=>{const b=await chromium.launch(),p=await b.newPage(),errors=[];let checks=0,ready=0,blocked=0,replacements=0;p.on('pageerror',e=>errors.push(e.message));try{
+await p.goto(process.env.GYMBUDDY_URL||'http://127.0.0.1:8879');await p.evaluate(es=>GymExercises.load=async()=>es,fixture);await p.locator('#workout-age').fill('30');await p.locator('#limitations-dropdown').evaluate(e=>e.open=true);
+const singles=['low-impact','knee','back','shoulder','wrist','balance','other'],cases=[...singles.map(x=>[x]),['knee','low-impact'],['knee','balance'],['back','knee'],['shoulder','wrist'],['knee','wrist','balance']];
+async function run(limits,experience,duration,mode,stretching){for(const x of singles)await p.locator('[name="limitation"][value="'+x+'"]').setChecked(limits.includes(x));await p.locator('#experience').selectOption(experience);await p.locator('#duration').selectOption(String(duration));await p.locator('#plan-mode').selectOption(mode);await p.locator('#stretching-preference').selectOption(stretching);const before=await p.locator('#workout-results').innerHTML();await p.locator('#generate-workout').click();await p.waitForFunction(()=>!document.querySelector('#generate-workout').disabled);const status=await p.locator('#builder-status').innerText();
+if(!status.includes('is ready')){assert(status.includes('restrictions have not been relaxed')||status.includes('unlisted limitation'),status);assert(await p.locator('#workout-results').innerHTML()===before,'failure preserved existing plan');checks+=2;blocked++;return;}
+ready++;assert(await p.locator('.day-card').count()===(mode==='weekly'?7:1));checks++;
+const profile={age:30,goal:'general-fitness',style:'auto',equipment:['none'],limitations:limits,experience,duration,stretching,exclude:''};
+assert(await p.evaluate(({es,profile})=>{const q=GymEngine.resolve(profile);return [...document.querySelectorAll('.exercise-card')].every(c=>GymEngine.eligible(es.find(e=>e.exerciseId===c.dataset.exerciseId),q));},{es:fixture,profile}));checks++;
+const cards=p.locator('.exercise-card');for(let i=0;i<await cards.count();i++){const c=cards.nth(i);await c.getByRole('button',{name:'Replace exercise',exact:true}).click();if(await c.locator('.alternatives button').count()>1){await c.locator('.alternatives button').first().click();assert(await p.evaluate(({es,profile})=>[...document.querySelectorAll('.exercise-card')].every(c=>GymEngine.eligible(es.find(e=>e.exerciseId===c.dataset.exerciseId),GymEngine.resolve(profile))),{es:fixture,profile}));checks++;replacements++;break;}}
+}
+for(const limits of cases)for(const mode of ['quick','weekly'])await run(limits,'advanced',30,mode,'both');
+for(const experience of ['beginner','intermediate','advanced'])for(const duration of [30,45,60])for(const stretching of ['solo','partner','both'])await run(['knee'],experience,duration,'quick',stretching);
+assert(errors.length===0);checks++;console.log(JSON.stringify({checks,ready,expectedBlocked:blocked,replacements,runtimeErrors:errors,transport:'controlled loader with genuine captured records'}));
+}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1});

@@ -570,3 +570,91 @@ Approvals, completed work, and test results are recorded separately.
   Before the new commit, local main and origin/main both pointed to aa136a8.
 - All required checks passed. Proceed with the user's approved 5A commit and
   non-force push, then verify matching refs and a clean working tree.
+
+## 2026-10-09 — Recovery audit of missing MVP history
+
+Recorded on the audit date; source timestamps are listed only where available.
+Existing entries are preserved. All 20 existing sections were compared for exact
+duplicate text; none were found, so none were removed.
+
+1. 2026-10-08 22:28:50 America/New_York: the accessible VS Code-origin chat
+   requested “Complete the Presentation-Ready MVP.” The turn failed/interrupted
+   after research and API/image work. It has no successful final completion
+   report. Source chat: 01a11933-a130-7632-bc3a-a2483d94d59b,
+   turn 01a11e7d-e8ec-7203-af21-132f9582fe83.
+2. Subsequent desktop request, exact original timestamp unavailable in the
+   recovered context: “Continue and finish GymBuddy for presentation.” Continued
+   local changes, implemented generation/styles/age filters/replacement and the
+   licensed local photo. Controlled checks passed; live provider errors remained.
+3. Subsequent desktop attachment, exact original timestamp unavailable:
+   “Fix ExerciseDB integration and complete final MVP improvements,” attachment
+   2a92e4cc-3272-4480-9553-97469de229be. Improved request pacing/cooldown,
+   duration options, limitations disclosure and exact-ID media. Historical result:
+   363 controlled checks and 11 live HTTP 200 requests / 247 records; two GIFs
+   loaded and two fell back. These counts belong to that earlier run.
+4. Current request: “Final MVP Completion, Bug Fixes, and Verification,” attachment
+   92e4d96d-b794-4307-9710-42eac29203c0. Preserve existing work; fix duplicate
+   names/IDs and media consistency, add practical warm-up/cooldown movements and
+   Solo/Partner/Both preferences, audit this log, verify, and stop before Git writes.
+   Implemented those changes without changing the original script.js BMI code.
+   Current results are recorded in VERIFICATION.md, separately from historical runs.
+
+Coverage: accessible recent VS Code-origin turns and this desktop conversation
+were reviewed. This is not a claim of exhaustive recovery of every past chat or
+unsaved editor interaction. No project prompt-log automation was found: Git hooks
+were sample hooks, no custom hooksPath was configured, and the inspected Codex
+notification setting invokes computer-use notification rather than prompt logging.
+Logging has therefore required explicit updates; no automatic logger was installed.
+
+Git: PROMPT_LOG.md is tracked. Remote main was confirmed at
+0a4e63f57c1bc1bd739f832f2743c4d198c240c1, which contains the earlier log through
+Checkpoint 5A. This audit and all presentation/MVP changes remain local and
+uncommitted; no commit or push was performed or newly authorized.
+
+## 2026-10-09 — Movement Limitations System Audit and Bug Fix
+
+User reported Advanced / Solo / 30-minute Quick Workout failing with “Avoid
+Knee-Loading Movements.” Requested reproduction before edits, audits of every
+restriction and combinations, all durations/experience levels, Quick/Weekly,
+replacement and stretching, fresh controlled/live tests, preserved design/work,
+updated verification and prompt records, and no commit/push.
+
+Reproduced using genuine captured records and assumed defaults for unspecified
+fields. Root cause: blanket knee-word exclusion rejected a stationary-knee floor
+crunch, leaving one push-up movement pattern below the two-movement minimum.
+Added a narrow ID/metadata/full-instruction-reviewed exception; unknown instruction
+versions remain excluded. Fixed filter-before-dedup order, excessive superset
+minimum, loading/support/balance gaps and authored guide exclusions. A fresh live
+glute-bridge false positive prompted the final back/balance tightening.
+
+Final matrix: 17,604 assertions / 2,160 profiles (774 generated, 1,386 expected
+insufficient), 2,322 weekly training-day selections and 551 replacement candidates.
+Controlled browser: 127 checks / 51 scenarios; 37 generated, 14 expected blocks,
+24 replacements. Existing suites freshly passed 16+219+128+200 checks. Initial live
+attempt timed out; retry and final-code run passed. Final live run: 20 checks,
+9 HTTP 200 API responses / 200 real records. No runtime errors. Manual interaction
+was not performed; a live desktop screenshot was reviewed. Full distinctions,
+remaining conservative-filter/provider limits and changed files are in VERIFICATION.md.
+
+Preserved all pre-existing local changes, design, photo, BMI, transport and media.
+No commit, push, reset or discard. Stopped for user review as requested.
+
+## 2026-10-09 — Final MVP Verification, Commit & GitHub Push authorization
+
+User confirmed the MVP and movement-limitations fix had passed their manual
+verification and explicitly authorized final review, intended-file staging, a
+descriptive commit and normal push to origin/main. They prohibited force-pushing,
+history rewriting, unrelated changes and committing a failing build; requested
+stopping on divergence or unexpected changes.
+
+Reviewed branch, remote, staged/unstaged changes, complete MVP diff and untracked
+files. Local/remote main matched 0a4e63f before finalization; staging was empty.
+Credential-pattern and temporary/cache scans found no matches in 26 project files.
+Fresh release regression suites passed 16+219+128+200 checks; syntax and whitespace
+checks passed. Reused the unchanged-code 2,160-profile/51-browser-scenario audit
+and 20 successful final live checks instead of repeating the provider calls.
+User manual verification is recorded as user-reported evidence only.
+
+No features or design changes made. Updated release documentation while preserving
+authentic historical entries. Commit and push are authorized; post-operation Git
+results will be reported directly after execution, not invented in this entry.
